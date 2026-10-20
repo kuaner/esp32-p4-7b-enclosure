@@ -1,0 +1,119 @@
+"""Current design: one-piece diamond stand, flat plinth and concealed receivers.
+
+Engineering frame is unchanged. Desktop parts are designed in actual printing
+coordinates for continuous layerwise growth without disposable supports.
+"""
+from pathlib import Path
+import json,math
+import cadquery as cq
+import trimesh
+from primitives import box,rr
+from interface import SPEC,receiver,hanger,flat_adapter
+from stand import build_stand,to_print,PARAMETERS as STAND_PARAMETERS
+from evidence import model_sources,stl_inputs
+
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'output/current'
+for name in ['STL','STEP','previews','verification']:
+    (OUT/name).mkdir(parents=True,exist_ok=True)
+P=json.loads((ROOT/'cad/parameters.json').read_text())
+P.update(revision='current',speaker_front_z=47.0,pod_front_width=145.,pod_rear_width=116.,
+         pod_inner=[101.,46.,27.5],pod_radius=6.0,maximum_module_short_bridge=4.5)
+P.update(STAND_PARAMETERS)
+P['interface']=SPEC.copy()
+P['stand_hook_y']=-28.0
+P['stand_hook_head_width']=8.0
+P['speaker_hook_head_width']=8.0
+
+
+print('Screen shell: downward hanging speaker, reversed gravity-seated base',flush=True)
+body=rr(171,106.34,5,0,22,y=.5)
+body=body.cut(box(165.08,100.34,2.9,y=.5,z=-1)).cut(box(164.88,97.9,16.5,y=1,z=1.9))
+lead=(cq.Workplane('XY',origin=(0,.5,-.01)).rect(166.28,101.54)
+      .workplane(offset=.61).rect(165.08,100.34).loft().val());body=body.cut(lead)
+for x,y in [(-78,-43.5),(-78,45.50005),(78.00009,-43.5),(78.00009,45.50005)]:
+    body=body.fuse(cq.Solid.makeCylinder(4,3.7,cq.Vector(x,y,14.8)))
+    body=body.cut(cq.Solid.makeCylinder(1.4,8,cq.Vector(x,y,14.7)))
+    body=body.cut(cq.Solid.makeCylinder(2.6,2.2,cq.Vector(x,y,20)))
+for x,y,z,w,h in [(84,-33.915,9.97,12.4,6.4),(84,-18.65005,9.97,12.4,6.4),
+                  (84,.1,10.8,16.8,10.6),(84,34.4178,9.45,14.2,7.4),(-84,33.80051,10.45,17.2,7.4)]:
+    opening=(cq.Workplane('YZ',origin=(x-6,y,z)).sketch().rect(w,h).vertices()
+             .fillet(1).finalize().extrude(12).val());body=body.cut(opening)
+for x,y,z,w,h,r in [(2.13,-44,10.1,19,6.2,.8),(0,60,14.3,22,4,.8)]:
+    opening=(cq.Workplane('XZ',origin=(x,y,z)).sketch().rect(w,h).vertices().fillet(r)
+             .finalize().extrude(14 if x else 20).val());body=body.cut(opening)
+for x in [-68,68]:body=body.cut(cq.Solid.makeCylinder(1.6,4.3,cq.Vector(x,-44.9,17.9)))
+for x in range(-32,33,8):
+    for y in [-32,-40]:body=body.cut(rr(4.5,2,.9,18.2,4,x,y))
+body=body.cut(rr(10,7,1.3,18.2,4,0,14))
+for y,direction in [(20,-1),(-28,1)]:
+    for x in SPEC['columns']:body=body.cut(receiver(x,y,direction))
+body=body.clean()
+
+print('Speaker: continuously growing shoulders, no overhanging ears',flush=True)
+def wire_at(w,h,r,z):
+    face=min(rr(w,h,r,z,.01,y=14).Faces(),key=lambda f:f.Center().z)
+    return face.outerWire()
+pod=cq.Solid.makeLoft([wire_at(116,54,6,52),wire_at(145,54,6,22.2)],ruled=True)
+pod=pod.cut(rr(101,46,1,22.1,27.5,y=14))
+pod=pod.cut(box(5.5,9,27.6,x=-50.75,y=14,z=22.1))
+for i in range(-8,9):
+    x=i*5.5;u=max(0,abs(x)-38);half=10+math.sqrt(max(0,100-u*u))
+    pod=pod.cut(rr(2,2*half-4,.95,49.4,2.9,x,14))
+for x in [-45.6,45.6]:
+    for y in [-4.1,32.1]:pod=pod.fuse(cq.Solid.makeCylinder(3,5.0,cq.Vector(x,y,47.0)))
+clips=[]
+for sign in [1,-1]:
+    relief=box(12,5,21.8,y=38,z=22.2)
+    beam=box(10,1.2,18.2,y=37.6,z=26)
+    # Grows inward along a 51-degree ramp in the supplied printing direction.
+    tooth=(cq.Workplane('YZ',origin=(-5,0,0)).polyline([
+        (37,26.4),(35.7,24.8),(35.7,24.5),(37,24.5)]).close().extrude(10).val())
+    clip=beam.fuse(tooth)
+    if sign<0:relief=relief.mirror('XZ',(0,14,0));clip=clip.mirror('XZ',(0,14,0))
+    pod=pod.cut(relief).fuse(clip);clips.append(clip)
+for x in SPEC['columns']:
+    pod=pod.fuse(hanger(x,20))
+pod=pod.clean()
+
+print('Stand: one-piece diamond upright, flat plinth and covered mounting slots',flush=True)
+stand,features=build_stand()
+for name,shape in features.items():shape.exportBrep(str(OUT/'verification'/f'feature_stand_{name}.brep'))
+
+parts={'01_DLC_shell':body,'02_DLC_speaker':pod,'03_stand':stand}
+report={'revision':'current','parameters':P,'parts':{},
+        'quantity':{'01_DLC_shell':1,'02_DLC_speaker':1,'03_stand':1},
+        'notes':['No locking keys, pin holes, access windows or separate lids.',
+                 'Speaker slides down. Screen moves down onto the reversed base slots.',
+                 'Three printed pieces; stand and flat plinth form one solid.',
+                 'Complete lower mounting apertures are covered by integral pads.',
+                 'Physical printing has not yet been performed.']}
+for name,shape in parts.items():
+    print('Export',name,flush=True)
+    assert shape.isValid() and len(shape.Solids())==1,(name,len(shape.Solids()))
+    shape.exportBrep(str(OUT/'verification'/f'{name}.brep'))
+    cq.exporters.export(shape,str(OUT/'STEP'/f'{name}.step'))
+    if name in ['01_DLC_shell','02_DLC_speaker']:
+        printable=shape.rotate((0,0,0),(1,0,0),180).translate((0,0,22 if name=='01_DLC_shell' else 52))
+    else:printable=to_print(shape)
+    b=printable.BoundingBox();printable=printable.translate((0,-(b.ymin+b.ymax)/2,-b.zmin))
+    path=OUT/'STL'/f'{name}.stl'
+    cq.exporters.export(printable,str(path),tolerance=.035,angularTolerance=.10)
+    mesh=trimesh.load_mesh(path)
+    assert mesh.is_watertight and mesh.is_winding_consistent and len(mesh.split())==1,name
+    report['parts'][name]={'valid_CAD':True,'watertight':True,'solids':1,
+        'bbox_mm':[round(float(v),3) for v in mesh.extents],
+        'volume_cm3':round(shape.Volume()/1000,3),'z_min':round(float(mesh.bounds[0,2]),6)}
+    print(report['parts'][name],flush=True)
+cq.Compound.makeCompound(clips).exportBrep(str(OUT/'verification/speaker_clips.brep'))
+assembly=cq.Assembly(name='ESP32_P4_enclosure')
+for name,col in [('01_DLC_shell',(.48,.54,.56)),('02_DLC_speaker',(.26,.32,.35)),('03_stand',(.26,.32,.35))]:
+    assembly.add(parts[name],name=name,color=cq.Color(*col))
+assembly.export(str(OUT/'STEP/assembly.step'))
+# Standard flat-print test adapter; follows the speaker printing direction.
+adapter=flat_adapter()
+adapter.exportBrep(str(OUT/'verification/adapter_tile.brep'))
+cq.exporters.export(adapter,str(OUT/'STEP/DLC20_adapter_tile.step'))
+(ROOT/'cad/parameters.json').write_text(json.dumps(P,indent=2))
+report.update(model_source_sha256=model_sources(),stl_sha256=stl_inputs())
+(OUT/'verification/print_validation.json').write_text(json.dumps(report,indent=2))
+print('CURRENT_DESIGN_BUILT',flush=True)

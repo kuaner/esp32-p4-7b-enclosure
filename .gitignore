@@ -1,0 +1,37 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+*.log
+*.gcode
+*.3mf
+*.brep
+
+# Third-party references remain local.
+/ESP32-P4-WIFI6-Touch-LCD-7B*.stp
+/ESP32-P4-WIFI6-Touch-LCD-7B*.step
+/ESP32-P4-WIFI6-Touch-LCD-7B*.dwg
+/ESP32-P4-WIFI6-Touch-LCD-7B*.pdf
+/design/
+
+# Archives live in GitHub Releases; keep only the current design in Git.
+/output/*
+!/output/current/
+/output/current/*
+!/output/current/README.md
+!/output/current/STL/
+!/output/current/STEP/
+!/output/current/previews/
+!/output/current/verification/
+/output/current/previews/*
+!/output/current/previews/overview.png
+!/output/current/previews/front.png
+!/output/current/previews/rear.png
+!/output/current/previews/exploded.png
+!/output/current/previews/stand.png
+!/output/current/previews/mounts.png
+!/output/current/previews/print_orientation.png
+/output/current/verification/*
+!/output/current/verification/*.json

@@ -1,0 +1,44 @@
+{
+  "revision": "current",
+  "parts": {
+    "02_DLC_speaker": {
+      "file": "02_DLC_speaker.stl",
+      "layer_height_mm": 0.2,
+      "self_support_allowance_mm": 0.28,
+      "layers_checked": 181,
+      "bridge_limit_mm": 4.5,
+      "maximum_gap_from_previous_mm": 0,
+      "maximum_two_end_bridge_mm": 0,
+      "bridge_regions": [],
+      "unsupported_regions": [],
+      "new_islands": [],
+      "pass": true
+    },
+    "03_stand": {
+      "file": "03_stand.stl",
+      "layer_height_mm": 0.2,
+      "self_support_allowance_mm": 0.28,
+      "layers_checked": 254,
+      "bridge_limit_mm": 4.5,
+      "maximum_gap_from_previous_mm": 0,
+      "maximum_two_end_bridge_mm": 0,
+      "bridge_regions": [],
+      "unsupported_regions": [],
+      "new_islands": [],
+      "pass": true
+    }
+  },
+  "method": "0.20 mm horizontal sections; previous-layer footprint; two-ended bridge tests with 0.20 mm bead overlap at anchors; separate from slicer support switch.",
+  "limitation": "Geometric audit, not physical filament-flow or strength validation.",
+  "model_source_sha256": {
+    "cad/build_design.py": "c66aa583b4fd8b99d47cedd315bc4693629378bcc61d0f9ae02dcc3d303688de",
+    "cad/interface.py": "7a1c01096c77133baffe5c95fbe01a6d8ca48366ca2e5b3a344e71782e67299b",
+    "cad/parameters.json": "cf239a0cc1a5b17b211f1216816c4c38dfc861ed2f8e3863982f1016e91d8555",
+    "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
+    "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de"
+  },
+  "stl_sha256": {
+    "output/current/STL/02_DLC_speaker.stl": "5f0c492df8ab43e44ab776b0377637f862b02acd5478a240080f091e5f3379e6",
+    "output/current/STL/03_stand.stl": "947c806e8bb5330b8f1079d3576cc57afdfecf47501fec802d6d5347c8ba1f2b"
+  }
+}

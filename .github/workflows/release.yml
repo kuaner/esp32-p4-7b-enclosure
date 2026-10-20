@@ -1,0 +1,76 @@
+name: Release models
+
+on:
+  push:
+    tags: ['model-*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing model-YYYYMMDD tag (optional .N suffix)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    uses: ./.github/workflows/cad.yml
+    with:
+      ref: ${{ inputs.tag || github.ref }}
+    permissions:
+      contents: read
+
+  publish:
+    needs: check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Validate tag and checked exports
+        shell: bash
+        run: |
+          [[ "$RELEASE_TAG" =~ ^model-[0-9]{8}(\.[0-9]+)?$ ]] || { echo 'Expected model-YYYYMMDD or model-YYYYMMDD.N'; exit 1; }
+          test "$(git rev-parse "refs/tags/$RELEASE_TAG^{commit}")" = "$(git rev-parse HEAD)"
+          python cad/check_release.py
+      - name: Package committed models on GitHub
+        run: |
+          python cad/package_design.py
+          python cad/check_release.py
+          git diff --exit-code
+      - name: Publish model assets
+        shell: bash
+        run: |
+          cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
+          当前模型由 GitHub Actions 检查并自动打包。
+
+          - `ESP32_P4_7B_current.zip`：STL、STEP、源码、装配说明、预览、AGENTS.md、MIT 许可和检查报告。
+          - 三个独立 STL：主壳、喇叭盒和一体底座。保持初始方向和 100% 比例，关闭支撑。
+          - `assembly.step`：可编辑装配模型。
+          - `SHA256SUMS.txt`：下载文件的 SHA-256 校验值。
+
+          已完成 CAD、78 项离散装配检查、两模块逐层几何检查及参考切片。当前设计尚未实物打样；配合松紧、卡扣寿命、桥接、承载与触控稳定性待验证。CI 不复跑依赖原厂文件的配合检查或 macOS Bambu 切片，只验证其与当前源码、导出的哈希关联。
+
+          原厂板卡资料、第三方喇叭图片、缓存和机器专用 G-code 不在发布包内。
+          NOTES
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" output/ESP32_P4_7B_current.zip output/current/STL/*.stl output/current/STEP/assembly.step output/SHA256SUMS.txt --clobber
+          else
+            gh release create "$RELEASE_TAG" output/ESP32_P4_7B_current.zip output/current/STL/*.stl output/current/STEP/assembly.step output/SHA256SUMS.txt --verify-tag --title "当前模型 · ${RELEASE_TAG#model-}" --notes-file "$RUNNER_TEMP/release-notes.md"
+          fi

@@ -1,0 +1,110 @@
+{
+  "width": 171.0,
+  "height": 106.34,
+  "enclosure_y": 0.5,
+  "depth": 22.0,
+  "outer_radius": 5.0,
+  "rear_floor": 3.6,
+  "pocket_width": 165.08,
+  "pocket_height": 100.34,
+  "pocket_y": 0.5,
+  "drawing_glass_width": 164.28,
+  "drawing_glass_height": 99.74,
+  "glass_clearance_x_each": 0.4,
+  "glass_clearance_y_each": 0.3,
+  "glass_step_z": 1.9,
+  "core_width": 164.88,
+  "core_height": 97.9,
+  "core_y": 1.0,
+  "mount_seat_z": 14.8,
+  "bolt_hole": 2.8,
+  "pod_inner": [
+    101.0,
+    46.0,
+    27.5
+  ],
+  "pod_radius": 6.0,
+  "pod_y": 14.0,
+  "pod_gap": 0.2,
+  "stand_angle": 20.0,
+  "speaker_nominal": [
+    99.5,
+    44.5,
+    20.8
+  ],
+  "speaker_max": [
+    100.0,
+    45.0,
+    21.1
+  ],
+  "speaker_front_z": 47.0,
+  "clip_thickness": 1.2,
+  "clip_length": 18.2,
+  "microphone_y": -44.9,
+  "microphone_hole_diameter": 3.2,
+  "speaker_wire_port": [
+    0.0,
+    14.0
+  ],
+  "wire_bundle_diameter": 3.0,
+  "wire_end_pocket_width": 5.5,
+  "camera_slot": [
+    22.0,
+    4.0
+  ],
+  "camera_slot_centre_z": 14.3,
+  "pod_front_width": 145.0,
+  "pod_rear_width": 116.0,
+  "maximum_module_short_bridge": 4.5,
+  "revision": "current",
+  "foot_width": 146.0,
+  "foot_depth": 104.0,
+  "foot_thickness": 4.5,
+  "lattice_width_top": 136.0,
+  "lattice_width_root": 104.0,
+  "lattice_depth": 6.0,
+  "lattice_holes": 20,
+  "diamond_width": 11.0,
+  "diamond_height": 15.0,
+  "diamond_roof_angle_deg": 53.746,
+  "stand_hook_y": -28.0,
+  "cover_max_width": 18.0,
+  "stand_style": "one_piece_diamond_flat_base",
+  "assembly_pieces": 1,
+  "interface": {
+    "tile_width": 20.0,
+    "tile_height": 28.0,
+    "plate_depth": 4.4,
+    "column_pitch": 125.0,
+    "columns": [
+      -62.5,
+      62.5
+    ],
+    "rows": [
+      20.0,
+      -28.0
+    ],
+    "row_pitch": 48.0,
+    "travel": 8.0,
+    "orientations": {
+      "speaker": -1,
+      "stand": 1
+    },
+    "entry": [
+      10.0,
+      9.0
+    ],
+    "neck": [
+      4.8,
+      16.7
+    ],
+    "stem": [
+      4.2,
+      8.0
+    ],
+    "case_back_z": 22.0,
+    "face_z": 22.2
+  },
+  "speaker_hook_head_width": 8.0,
+  "stand_hook_head_width": 8.0
+}

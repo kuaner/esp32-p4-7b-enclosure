@@ -1,0 +1,363 @@
+{
+  "checks": {
+    "lower_aperture_-62.5_covered_with_1mm_margin": {
+      "uncovered_mm3": 0.0,
+      "pass": true
+    },
+    "lower_aperture_62.5_covered_with_1mm_margin": {
+      "uncovered_mm3": 0.0,
+      "pass": true
+    },
+    "installed_screen_vs_case": {
+      "intersection_mm3": 8.43e-05,
+      "pass": true
+    },
+    "speaker_vs_screen": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_vs_screen": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_vs_speaker": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_entry_normal_6": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_entry_normal_6_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_entry_normal_3": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_entry_normal_3_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_entry_normal_1": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_entry_normal_1_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_entry_normal_0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_entry_normal_0_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_8": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_8_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_6": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_6_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_4": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_4_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_2": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_2_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_lower_0_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_gravity_seat_blocks_0p3mm": {
+      "blocking_mm3": 2.4768915,
+      "pass": true
+    },
+    "speaker_wide_heads_prevent_normal_pullout": {
+      "blocking_mm3": 1.2240132,
+      "pass": true
+    },
+    "pedestal_entry_normal_6": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_entry_normal_6_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_entry_normal_3": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_entry_normal_3_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_entry_normal_1": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_entry_normal_1_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_entry_normal_0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_entry_normal_0_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_8": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_8_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_6": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_6_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_4": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_4_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_2": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_2_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_lower_0_vs_other_module": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "pedestal_gravity_seat_blocks_0p3mm": {
+      "blocking_mm3": 2.4768915,
+      "pass": true
+    },
+    "pedestal_wide_heads_prevent_normal_pullout": {
+      "blocking_mm3": 0.7463022,
+      "pass": true
+    },
+    "mic_-68_clear_case": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "mic_-68_clear_pedestal": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "mic_68_clear_case": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "mic_68_clear_pedestal": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_envelope_min": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_envelope_nominal": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_envelope_max": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_push_into_rigid_box_-25": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_push_into_rigid_box_-10": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "speaker_push_into_rigid_box_0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "wire_0_vs_case": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "wire_0_vs_pod": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "wire_4_vs_case": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "wire_4_vs_pod": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "wire_8_vs_case": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "wire_8_vs_pod": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "TF_card_path": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "top_camera_ribbon_exit": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "camera_exit_vs_speaker": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "camera_exit_vs_pedestal": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "max_lens_insertion_30": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "max_lens_insertion_20": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "max_lens_insertion_12": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "max_lens_insertion_8": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "max_lens_insertion_5": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "max_lens_insertion_3": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "max_lens_insertion_1": {
+      "intersection_mm3": 1.89e-05,
+      "pass": true
+    },
+    "max_lens_insertion_0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "standard_tile_fits_at_-62.5_20.0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "standard_tile_fits_at_62.5_20.0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "standard_tile_fits_at_-62.5_-28.0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "standard_tile_fits_at_62.5_-28.0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    }
+  },
+  "notes": {
+    "revision": "current",
+    "screen_reference": {
+      "basis": "User confirmed the assembled screen edge is flat; no outward flex clearance is needed.",
+      "unchanged": "All rigid glass/LCD/PCB parts, original mounts and electronic components.",
+      "flex_only_exclusion": "Parts 1337/1338: Y < -47.55, Z > 1.90001, X [-74,-54] / [-15,16]. Part 1337 also Y < -49.085, X [-74,-54].",
+      "limitation": "Outward flex bends are excluded from rigid-fit checks; folded cable shape is not simulated.",
+      "drawing_glass_nominal_mm": [
+        164.28,
+        99.74,
+        1.9
+      ],
+      "step_glass_front_outline_mm": [
+        164.28,
+        99.17
+      ],
+      "glass_centre_y_mm": 0.5
+    },
+    "screen_case_candidate_count": 12,
+    "total_screen_components": 1339,
+    "candidate_culling": "Only AABBs wholly in guaranteed empty core X +/-82.44,Y[-47.95,49.95],Z(1.9,14.79) excluded.",
+    "mechanical_only": "DLC-20 is a project mechanical interface, not an electrical standard.",
+    "load": "Opposite slot orientations seat both loads under gravity; no auxiliary lock. Lift along the rear plane to remove.",
+    "camera": "22 x 4 mm top-centre ribbon exit; no camera mount.",
+    "printing": "Support disabled; geometry-audited continuous growth and short two-ended bridges.",
+    "limitations": "Discrete positions, not continuous sweep, strength or fatigue simulation. No anti-lift retention is intended.",
+    "physical_fit": "Current design is for CAD review; not physically prototyped."
+  },
+  "model_source_sha256": {
+    "cad/build_design.py": "c66aa583b4fd8b99d47cedd315bc4693629378bcc61d0f9ae02dcc3d303688de",
+    "cad/interface.py": "7a1c01096c77133baffe5c95fbe01a6d8ca48366ca2e5b3a344e71782e67299b",
+    "cad/parameters.json": "cf239a0cc1a5b17b211f1216816c4c38dfc861ed2f8e3863982f1016e91d8555",
+    "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
+    "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de"
+  },
+  "stl_sha256": {
+    "output/current/STL/01_DLC_shell.stl": "76e125bee3c0c8f49ee83660acb7a4526f008193356f83219560a2c2d3322dd8",
+    "output/current/STL/02_DLC_speaker.stl": "5f0c492df8ab43e44ab776b0377637f862b02acd5478a240080f091e5f3379e6",
+    "output/current/STL/03_stand.stl": "947c806e8bb5330b8f1079d3576cc57afdfecf47501fec802d6d5347c8ba1f2b"
+  },
+  "brep_sha256": {
+    "output/current/verification/01_DLC_shell.brep": "1d0f301d7a68fa3b73bc15b28c197a8dd0b116e5017e8171432e7c54dabdc5ac",
+    "output/current/verification/02_DLC_speaker.brep": "0ba86cc994756e87ce5ee0fae20b861082966ba857aa7fc1d030bc2f39131a00",
+    "output/current/verification/03_stand.brep": "bf20de26ae086140793fae7d186c955854c20f4f8360f94fae00eaed4a98a19c",
+    "output/current/verification/speaker_clips.brep": "77451d7af0c98b9e4c8b0aade891d99c1780199497cd9ed29b771c181eadf0b4"
+  },
+  "vendor_sha256": "f2104dc257ee8575459ddf74404e32faf81e4bcda23a8bfec23b6604c089986c"
+}

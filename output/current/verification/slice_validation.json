@@ -1,0 +1,49 @@
+{
+  "revision": "current",
+  "slicer": "Bambu Studio 02.08.02.61",
+  "reference_printer": "Bambu Lab P1S 0.4 nozzle",
+  "filament": "Generic PETG",
+  "layer_height_mm": 0.2,
+  "support_enabled": false,
+  "auto_orientation": false,
+  "notes": [
+    "Reference profile is a verification setup, not a printer-specific G-code deliverable.",
+    "Automatic supports can still be suggested for small bridges. Keep supports off.",
+    "Geometry is checked separately; this slice is not a physical print test."
+  ],
+  "parts": {
+    "01_DLC_shell": {
+      "input_sha256": "76e125bee3c0c8f49ee83660acb7a4526f008193356f83219560a2c2d3322dd8",
+      "return_code": 0,
+      "layers": 110,
+      "support_toolpath_seconds": 0,
+      "warning": "",
+      "estimated_seconds": 20098,
+      "estimated_filament_g": 77.29,
+      "bridge_toolpath_seconds": 1415.2,
+      "pass": true
+    },
+    "02_DLC_speaker": {
+      "input_sha256": "5f0c492df8ab43e44ab776b0377637f862b02acd5478a240080f091e5f3379e6",
+      "return_code": 0,
+      "layers": 181,
+      "support_toolpath_seconds": 0,
+      "warning": "",
+      "estimated_seconds": 16780,
+      "estimated_filament_g": 54.64,
+      "bridge_toolpath_seconds": 388.4,
+      "pass": true
+    },
+    "03_stand": {
+      "input_sha256": "947c806e8bb5330b8f1079d3576cc57afdfecf47501fec802d6d5347c8ba1f2b",
+      "return_code": 0,
+      "layers": 254,
+      "support_toolpath_seconds": 0,
+      "warning": "",
+      "estimated_seconds": 21343,
+      "estimated_filament_g": 67.22,
+      "bridge_toolpath_seconds": 1470.6,
+      "pass": true
+    }
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "revision": "current",
+  "parameters": {
+    "width": 171.0,
+    "height": 106.34,
+    "enclosure_y": 0.5,
+    "depth": 22.0,
+    "outer_radius": 5.0,
+    "rear_floor": 3.6,
+    "pocket_width": 165.08,
+    "pocket_height": 100.34,
+    "pocket_y": 0.5,
+    "drawing_glass_width": 164.28,
+    "drawing_glass_height": 99.74,
+    "glass_clearance_x_each": 0.4,
+    "glass_clearance_y_each": 0.3,
+    "glass_step_z": 1.9,
+    "core_width": 164.88,
+    "core_height": 97.9,
+    "core_y": 1.0,
+    "mount_seat_z": 14.8,
+    "bolt_hole": 2.8,
+    "pod_inner": [
+      101.0,
+      46.0,
+      27.5
+    ],
+    "pod_radius": 6.0,
+    "pod_y": 14.0,
+    "pod_gap": 0.2,
+    "stand_angle": 20.0,
+    "speaker_nominal": [
+      99.5,
+      44.5,
+      20.8
+    ],
+    "speaker_max": [
+      100.0,
+      45.0,
+      21.1
+    ],
+    "speaker_front_z": 47.0,
+    "clip_thickness": 1.2,
+    "clip_length": 18.2,
+    "microphone_y": -44.9,
+    "microphone_hole_diameter": 3.2,
+    "speaker_wire_port": [
+      0.0,
+      14.0
+    ],
+    "wire_bundle_diameter": 3.0,
+    "wire_end_pocket_width": 5.5,
+    "camera_slot": [
+      22.0,
+      4.0
+    ],
+    "camera_slot_centre_z": 14.3,
+    "pod_front_width": 145.0,
+    "pod_rear_width": 116.0,
+    "maximum_module_short_bridge": 4.5,
+    "revision": "current",
+    "foot_width": 146.0,
+    "foot_depth": 104.0,
+    "foot_thickness": 4.5,
+    "lattice_width_top": 136.0,
+    "lattice_width_root": 104.0,
+    "lattice_depth": 6.0,
+    "lattice_holes": 20,
+    "diamond_width": 11.0,
+    "diamond_height": 15.0,
+    "diamond_roof_angle_deg": 53.746,
+    "stand_hook_y": -28.0,
+    "cover_max_width": 18.0,
+    "stand_style": "one_piece_diamond_flat_base",
+    "assembly_pieces": 1,
+    "interface": {
+      "tile_width": 20.0,
+      "tile_height": 28.0,
+      "plate_depth": 4.4,
+      "column_pitch": 125.0,
+      "columns": [
+        -62.5,
+        62.5
+      ],
+      "rows": [
+        20.0,
+        -28.0
+      ],
+      "row_pitch": 48.0,
+      "travel": 8.0,
+      "orientations": {
+        "speaker": -1,
+        "stand": 1
+      },
+      "entry": [
+        10.0,
+        9.0
+      ],
+      "neck": [
+        4.8,
+        16.7
+      ],
+      "stem": [
+        4.2,
+        8.0
+      ],
+      "case_back_z": 22.0,
+      "face_z": 22.2
+    },
+    "speaker_hook_head_width": 8.0,
+    "stand_hook_head_width": 8.0
+  },
+  "parts": {
+    "01_DLC_shell": {
+      "valid_CAD": true,
+      "watertight": true,
+      "solids": 1,
+      "bbox_mm": [
+        171.0,
+        106.34,
+        22.0
+      ],
+      "volume_cm3": 96.829,
+      "z_min": 0.0
+    },
+    "02_DLC_speaker": {
+      "valid_CAD": true,
+      "watertight": true,
+      "solids": 1,
+      "bbox_mm": [
+        145.0,
+        54.0,
+        36.3
+      ],
+      "volume_cm3": 77.63,
+      "z_min": 0.0
+    },
+    "03_stand": {
+      "valid_CAD": true,
+      "watertight": true,
+      "solids": 1,
+      "bbox_mm": [
+        146.0,
+        104.0,
+        50.8
+      ],
+      "volume_cm3": 105.71,
+      "z_min": 0.0
+    }
+  },
+  "quantity": {
+    "01_DLC_shell": 1,
+    "02_DLC_speaker": 1,
+    "03_stand": 1
+  },
+  "notes": [
+    "No locking keys, pin holes, access windows or separate lids.",
+    "Speaker slides down. Screen moves down onto the reversed base slots.",
+    "Three printed pieces; stand and flat plinth form one solid.",
+    "Complete lower mounting apertures are covered by integral pads.",
+    "Physical printing has not yet been performed."
+  ],
+  "model_source_sha256": {
+    "cad/build_design.py": "c66aa583b4fd8b99d47cedd315bc4693629378bcc61d0f9ae02dcc3d303688de",
+    "cad/interface.py": "7a1c01096c77133baffe5c95fbe01a6d8ca48366ca2e5b3a344e71782e67299b",
+    "cad/parameters.json": "cf239a0cc1a5b17b211f1216816c4c38dfc861ed2f8e3863982f1016e91d8555",
+    "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
+    "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de"
+  },
+  "stl_sha256": {
+    "output/current/STL/01_DLC_shell.stl": "76e125bee3c0c8f49ee83660acb7a4526f008193356f83219560a2c2d3322dd8",
+    "output/current/STL/02_DLC_speaker.stl": "5f0c492df8ab43e44ab776b0377637f862b02acd5478a240080f091e5f3379e6",
+    "output/current/STL/03_stand.stl": "947c806e8bb5330b8f1079d3576cc57afdfecf47501fec802d6d5347c8ba1f2b"
+  }
+}
