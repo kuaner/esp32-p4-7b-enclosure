@@ -16,7 +16,7 @@ Editable source is `cad/`; `output/current/` is the sole current deliverable. Up
 - Keep power, switch, buttons, TF access and both full microphone rays clear. Camera accommodation is only the centred 22 × 4 mm top ribbon opening.
 - Speaker nominal: 99.5 × 44.5 × 20.8 mm; maximum 100 × 45 × 21.1 mm. Open pod with outward grille, frame supports and simple internal clips, no separate lid. Optional thin tape touches the frame only.
 - Speaker lead passes through the centred shell opening and is concealed by the mounted pod. No ties or unnecessary side openings.
-- The speaker plug recess must stop at the inner wall (Y=49.95), without cutting beneath the sidewall or leaving a suspended lip. Preserve the full-height sidewall check.
+- The speaker plug recess must end at Y=48.45, leaving a full 1.5 mm solid land before the inner wall at Y=49.95. Do not merely trim it flush to the wall. Preserve the land and full-height sidewall check.
 - Retain the board-side speaker plug recess and interior channel to the centred outlet. The mating plug allowance is provisional; do not claim it was measured from the vendor model.
 - Expansion interface: gravity hooks, 8 mm travel, 125 mm horizontal pitch. Upper row hangs modules downward; lower row is reversed so the screen moves downward onto a fixed base. No independent latch, sliding key, pin or anti-lift lock.
 - Hooks must constrain installed axial play, not merely block a distant pull-out test. Dimension the tapered shoulder's contact at the slot edge: nominal total normal play is 0.25 mm. Check both directions on all four real joints.

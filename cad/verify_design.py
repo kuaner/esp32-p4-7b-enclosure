@@ -5,7 +5,8 @@ import cadquery as cq
 from fit_reference import assembled_screen_component,reference_notes
 from primitives import box,rr
 from interface import SPEC,receiver,flat_adapter as tile
-from wire_route import wire_envelope,board_wire_envelope,board_plug_envelope,BOARD_PLUG_XY
+from wire_route import (wire_envelope,board_wire_envelope,board_plug_envelope,
+                        BOARD_PLUG_XY,PLUG_WALL_LAND)
 from screen_geometry import glass_envelope
 from evidence import hashes,model_sources,stl_inputs
 
@@ -122,10 +123,12 @@ check('board_speaker_wire_vs_electronics',board_wire_envelope(),board)
 for name,x,y,z in [('plug',*BOARD_PLUG_XY,21.05),('channel',-24.25,29.4675,21.0)]:
     probe=box(4,4,.9,x,y,z);missing=probe.cut(body).Volume()
     checks[f'{name}_recess_preserves_outer_skin']={'missing_mm3':round(missing,7),'pass':missing<.001}
-# The wall beside the recess must extend down continuously, with no undercut roof.
-wall_probe=box(9,.8,2.5,BOARD_PLUG_XY[0],50.4,18.45)
+# Preserve both the 1.5 mm inner land and the original continuous sidewall.
+land_start=49.95-PLUG_WALL_LAND
+wall_probe=box(12,50.8-land_start,2.5,BOARD_PLUG_XY[0],(50.8+land_start)/2,18.45)
 missing=wall_probe.cut(body).Volume()
-checks['plug_recess_sidewall_is_continuous']={'missing_mm3':round(missing,7),'pass':missing<.001}
+checks['plug_recess_sidewall_is_continuous']={'inner_land_mm':PLUG_WALL_LAND,
+    'missing_mm3':round(missing,7),'pass':missing<.001}
 check('TF_card_path',box(11.5,18,1.5,2.13,-51,8.85),body)
 # A conservative ribbon-only probe through the requested top opening.
 camera=box(18,15,.4,0,53.67,15.5)
@@ -152,7 +155,7 @@ notes={'revision':'current','screen_reference':reference_notes(),
        'limitations':'Discrete positions, not continuous sweep, strength or fatigue simulation. No anti-lift retention is intended.',
        'physical_fit':'Prototype feedback received; these corrected dimensions await another physical check.',
        'hook_clearance':'Real local joints checked in both normal directions; target total free travel 0.25 mm.',
-       'speaker_plug':'Board-side PH2.0 H7 position from vendor model. Mating plug allowance is assumed 10 x 10 x 5.5 mm, not a measured mating-part model.'}
+       'speaker_plug':'Board-side PH2.0 position from vendor model. Provisional 10 x 6.5 x 5.5 mm mating allowance; PH reference housing XY is 5.8 x 4.5 mm (JST ePH.pdf), not a measurement or identification of the user plug.'}
 (OUT/'fit_validation.json').write_text(json.dumps({'checks':checks,'notes':notes,
     'model_source_sha256':model_sources(),'stl_sha256':stl_inputs(),
     'brep_sha256':hashes([OUT/f'{n}.brep' for n in ['shell','speaker','stand','speaker_clips']]),

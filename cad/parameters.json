@@ -131,7 +131,7 @@
   "flex_relief": "Open touch-FPC seat notch and chamfer-roof LCD pocket; complete FPC geometry retained",
   "speaker_plug_pocket": [
     12,
-    11.015,
+    9.5,
     2.6
   ],
   "speaker_plug_xy": [
@@ -141,5 +141,11 @@
   "speaker_wire_channel_width": 3.8,
   "speaker_wire_channel_depth": 2.5,
   "physical_status": "Prototype feedback received; corrections awaiting recheck",
-  "speaker_plug_pocket_limit_y": 49.95
+  "speaker_plug_pocket_limit_y": 48.45,
+  "speaker_plug_wall_land": 1.5,
+  "speaker_plug_allowance": [
+    10.0,
+    6.5,
+    5.5
+  ]
 }

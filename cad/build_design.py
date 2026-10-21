@@ -12,7 +12,8 @@ from interface import SPEC,receiver,hanger,flat_adapter
 from stand import build_stand,to_print,PARAMETERS as STAND_PARAMETERS
 from evidence import model_sources,stl_inputs
 from screen_geometry import SCREEN,flex_reliefs
-from wire_route import board_plug_recess,board_wire_channel,BOARD_PLUG_XY,CHANNEL_WIDTH
+from wire_route import (board_plug_recess,board_wire_channel,BOARD_PLUG_XY,CHANNEL_WIDTH,
+                        PLUG_WALL_LAND,PLUG_POCKET_HEIGHT,PLUG_ALLOWANCE)
 
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'output/current'
 for name in ['STL','STEP','previews','verification']:
@@ -23,8 +24,9 @@ P.update(revision='current',speaker_front_z=47.0,pod_front_width=145.,pod_rear_w
 P.update(STAND_PARAMETERS)
 P.update(SCREEN)
 P.update(flex_relief='Open touch-FPC seat notch and chamfer-roof LCD pocket; complete FPC geometry retained',
-         speaker_plug_pocket=[12,11.015,2.6],speaker_plug_xy=list(BOARD_PLUG_XY),
-         speaker_plug_pocket_limit_y=49.95,
+         speaker_plug_pocket=[12,PLUG_POCKET_HEIGHT,2.6],speaker_plug_xy=list(BOARD_PLUG_XY),
+         speaker_plug_pocket_limit_y=49.95-PLUG_WALL_LAND,
+         speaker_plug_wall_land=PLUG_WALL_LAND,speaker_plug_allowance=list(PLUG_ALLOWANCE),
          speaker_wire_channel_width=CHANNEL_WIDTH,speaker_wire_channel_depth=2.5,
          physical_status='Prototype feedback received; corrections awaiting recheck')
 P['interface']=SPEC.copy()

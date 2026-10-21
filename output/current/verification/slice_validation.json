@@ -13,14 +13,14 @@
   ],
   "parts": {
     "shell": {
-      "input_sha256": "a7805cf72a278ed258fc740175f7741da67eaad433cf2126194fe0e799fd308d",
+      "input_sha256": "cba9e597f4fe800adbc82280542f8d622dd97d78c34d4b61add3bb0235f8f6cb",
       "return_code": 0,
       "layers": 110,
       "support_toolpath_seconds": 0,
       "warning": "",
-      "estimated_seconds": 19358,
-      "estimated_filament_g": 75.83,
-      "bridge_toolpath_seconds": 1362.2,
+      "estimated_seconds": 19415,
+      "estimated_filament_g": 75.84,
+      "bridge_toolpath_seconds": 1359.5,
       "pass": true
     },
     "speaker": {
@@ -40,7 +40,7 @@
       "layers": 254,
       "support_toolpath_seconds": 0,
       "warning": "",
-      "estimated_seconds": 21337,
+      "estimated_seconds": 21350,
       "estimated_filament_g": 67.21,
       "bridge_toolpath_seconds": 1470.5,
       "pass": true

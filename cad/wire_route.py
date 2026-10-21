@@ -11,12 +11,15 @@ BOARD_PLUG_XY=(-48.5,44.935)
 BOARD_WIRE_Z=19.2
 CHANNEL_WIDTH=3.8
 CHANNEL_TOP_Z=20.9
+PLUG_WALL_LAND=1.5
+PLUG_POCKET_HEIGHT=9.5
+PLUG_ALLOWANCE=(10.,6.5,5.5)
 
 
 def board_plug_recess(wall_y=49.95):
-    pocket=rr(12,12,2,18.3,2.7,*BOARD_PLUG_XY)
-    # End at the inner wall. Cutting behind it leaves an unnecessary thin roof.
-    return pocket.intersect(box(400,400,30,y=wall_y-200))
+    # Leave a visible solid land; do not run the recess into the inner wall.
+    centre_y=wall_y-PLUG_WALL_LAND-PLUG_POCKET_HEIGHT/2
+    return rr(12,PLUG_POCKET_HEIGHT,2,18.3,2.7,BOARD_PLUG_XY[0],centre_y)
 
 
 def board_wire_channel():
@@ -31,8 +34,11 @@ def board_wire_channel():
 
 
 def board_plug_envelope():
-    # The mating housing is not in the vendor STEP; this is a documented allowance.
-    return rr(10,10,1,15.,5.5,*BOARD_PLUG_XY)
+    # Provisional mating allowance, not a measured user part. PH reference body
+    # is 5.8 x 4.5 mm in XY: https://www.jst-mfg.com/product/pdf/eng/ePH.pdf
+    # Keep the broad X allowance; Y includes 1 mm each side of the reference body.
+    w,h,d=PLUG_ALLOWANCE
+    return rr(w,h,1,15.,d,*BOARD_PLUG_XY)
 
 
 def board_wire_envelope(radius=1.5):

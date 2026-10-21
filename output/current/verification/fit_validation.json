@@ -309,6 +309,7 @@
       "pass": true
     },
     "plug_recess_sidewall_is_continuous": {
+      "inner_land_mm": 1.5,
       "missing_mm3": 0.0,
       "pass": true
     },
@@ -417,24 +418,24 @@
     "limitations": "Discrete positions, not continuous sweep, strength or fatigue simulation. No anti-lift retention is intended.",
     "physical_fit": "Prototype feedback received; these corrected dimensions await another physical check.",
     "hook_clearance": "Real local joints checked in both normal directions; target total free travel 0.25 mm.",
-    "speaker_plug": "Board-side PH2.0 H7 position from vendor model. Mating plug allowance is assumed 10 x 10 x 5.5 mm, not a measured mating-part model."
+    "speaker_plug": "Board-side PH2.0 position from vendor model. Provisional 10 x 6.5 x 5.5 mm mating allowance; PH reference housing XY is 5.8 x 4.5 mm (JST ePH.pdf), not a measurement or identification of the user plug."
   },
   "model_source_sha256": {
-    "cad/build_design.py": "c6e527a3d193a6b64d0160796cc26592dbb2607dfd6253cec3a117ccea401e77",
+    "cad/build_design.py": "ff4a9d92b94027087ed77bb712787976dff11eeed549e2a1b8dc0e62d3ce7644",
     "cad/interface.py": "e5600ab14a7e4054e31e2ea24d5740398a8e2a6c702355da7edd9663980ff784",
-    "cad/parameters.json": "f13236c4d46af981b07e1c47d79465424ce42018b1957cd03d24722754491d96",
+    "cad/parameters.json": "eb28a9bde4e3ce76d75e46e793187e39c9be190974ef4fd9d3b6194bcc6b8b6f",
     "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
     "cad/screen_geometry.py": "6973b97aa3abb066b859e5c22023ea98b822cde69f7dbbd025c6a11b7f49d4d7",
     "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de",
-    "cad/wire_route.py": "7c9cecb2222bc83d3eadbc06f6f5bf0c1370f0f7d4348743020bfdc916fa6c70"
+    "cad/wire_route.py": "ed2fd86c470e4966307f7a37fcda6b1ecba843840982820bb38b80915d7da800"
   },
   "stl_sha256": {
-    "output/current/STL/shell.stl": "a7805cf72a278ed258fc740175f7741da67eaad433cf2126194fe0e799fd308d",
+    "output/current/STL/shell.stl": "cba9e597f4fe800adbc82280542f8d622dd97d78c34d4b61add3bb0235f8f6cb",
     "output/current/STL/speaker.stl": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
     "output/current/STL/stand.stl": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a"
   },
   "brep_sha256": {
-    "output/current/verification/shell.brep": "963fe58ef08eb1a0e15c4a8dc818eb8998afac0d9d182dbeaa1b5cf1cc8f5f18",
+    "output/current/verification/shell.brep": "d9e488843f836d6548f85b579d710aa18f5d7d9729b84731ac0ca1178bf8ee35",
     "output/current/verification/speaker.brep": "84c05acc4336897c3c49adb89143af514b7c8629eedf425bdfc6df55e932c3e6",
     "output/current/verification/speaker_clips.brep": "77451d7af0c98b9e4c8b0aade891d99c1780199497cd9ed29b771c181eadf0b4",
     "output/current/verification/stand.brep": "fba9d737d22f29b882da42bf33917597c8fa11dc6a239bd06aca41bad10feb36"
