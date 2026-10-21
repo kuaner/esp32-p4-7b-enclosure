@@ -12,6 +12,11 @@ on:
         required: false
         type: string
         default: ''
+      export_models:
+        description: Upload rebuilt models for the release job
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -44,6 +49,27 @@ jobs:
         run: python -m compileall -q cad
       - name: Build three printable solids
         run: python cad/build_design.py
+      - name: Verify rebuilt STL matches checked geometry
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          report=json.loads(Path('output/current/verification/slice_validation.json').read_text())
+          for name,part in report['parts'].items():
+              path=Path('output/current/STL')/f'{name}.stl'
+              assert hashlib.sha256(path.read_bytes()).hexdigest()==part['input_sha256'], name
+          print('Rebuilt STL matches the checked inputs')
+          PY
       - name: Audit speaker and stand layer geometry
         run: python cad/check_printability.py
+      - name: Upload rebuilt models
+        if: inputs.export_models
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: models
+          path: |
+            output/current/STL/*.stl
+            output/current/STEP/*.step
+          if-no-files-found: error
+          retention-days: 1
       # Vendor-dependent board checks and macOS Bambu slicing run locally.

@@ -13,8 +13,10 @@ CHANNEL_WIDTH=3.8
 CHANNEL_TOP_Z=20.9
 
 
-def board_plug_recess():
-    return rr(12,12,2,18.3,2.7,*BOARD_PLUG_XY)
+def board_plug_recess(wall_y=49.95):
+    pocket=rr(12,12,2,18.3,2.7,*BOARD_PLUG_XY)
+    # End at the inner wall. Cutting behind it leaves an unnecessary thin roof.
+    return pocket.intersect(box(400,400,30,y=wall_y-200))
 
 
 def board_wire_channel():

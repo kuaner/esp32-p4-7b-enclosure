@@ -76,7 +76,7 @@ def audit(path,limit):
 report={'revision':'current','parts':{},
         'method':'0.20 mm horizontal sections; previous-layer footprint; two-ended bridge tests with 0.20 mm bead overlap at anchors; separate from slicer support switch.',
         'limitation':'Geometric audit, not physical filament-flow or strength validation.'}
-for name in ['02_DLC_speaker','03_stand']:
+for name in ['speaker','stand']:
     print('Layer audit',name,flush=True)
     r=audit(OUT/'STL'/f'{name}.stl',4.5)
     report['parts'][name]=r

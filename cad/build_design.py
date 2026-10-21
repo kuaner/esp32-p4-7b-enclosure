@@ -23,7 +23,8 @@ P.update(revision='current',speaker_front_z=47.0,pod_front_width=145.,pod_rear_w
 P.update(STAND_PARAMETERS)
 P.update(SCREEN)
 P.update(flex_relief='Open touch-FPC seat notch and chamfer-roof LCD pocket; complete FPC geometry retained',
-         speaker_plug_pocket=[12,12,2.6],speaker_plug_xy=list(BOARD_PLUG_XY),
+         speaker_plug_pocket=[12,11.015,2.6],speaker_plug_xy=list(BOARD_PLUG_XY),
+         speaker_plug_pocket_limit_y=49.95,
          speaker_wire_channel_width=CHANNEL_WIDTH,speaker_wire_channel_depth=2.5,
          physical_status='Prototype feedback received; corrections awaiting recheck')
 P['interface']=SPEC.copy()
@@ -34,7 +35,8 @@ P['speaker_hook_head_width']=8.0
 
 print('Screen shell: downward hanging speaker, reversed gravity-seated base',flush=True)
 body=rr(P['width'],P['height'],5,0,22,y=.5)
-body=body.cut(box(165.08,P['pocket_height'],2.9,y=.5,z=-1)).cut(box(164.88,97.9,16.5,y=1,z=1.9))
+body=body.cut(box(165.08,P['pocket_height'],2.9,y=.5,z=-1)).cut(
+    box(P['core_width'],P['core_height'],16.5,y=P['core_y'],z=1.9))
 lead=(cq.Workplane('XY',origin=(0,.5,-.01)).rect(166.28,P['front_mouth_height'])
       .workplane(offset=.31).rect(165.68,P['front_lip_pocket_height'])
       .workplane(offset=.30).rect(165.08,P['pocket_height']).loft(ruled=True).val())
@@ -55,7 +57,7 @@ for x in [-68,68]:body=body.cut(cq.Solid.makeCylinder(1.6,4.3,cq.Vector(x,-44.9,
 for x in range(-32,33,8):
     for y in [-32,-40]:body=body.cut(rr(4.5,2,.9,18.2,4,x,y))
 body=body.cut(rr(10,7,1.3,18.2,4,0,14))
-body=body.cut(board_plug_recess()).cut(board_wire_channel())
+body=body.cut(board_plug_recess(P['core_y']+P['core_height']/2)).cut(board_wire_channel())
 for y,direction in [(20,-1),(-28,1)]:
     for x in SPEC['columns']:body=body.cut(receiver(x,y,direction))
 body=body.clean()
@@ -90,9 +92,9 @@ print('Stand: one-piece diamond upright, flat plinth and covered mounting slots'
 stand,features=build_stand()
 for name,shape in features.items():shape.exportBrep(str(OUT/'verification'/f'feature_stand_{name}.brep'))
 
-parts={'01_DLC_shell':body,'02_DLC_speaker':pod,'03_stand':stand}
+parts={'shell':body,'speaker':pod,'stand':stand}
 report={'revision':'current','parameters':P,'parts':{},
-        'quantity':{'01_DLC_shell':1,'02_DLC_speaker':1,'03_stand':1},
+        'quantity':{'shell':1,'speaker':1,'stand':1},
         'notes':['No locking keys, pin holes, access windows or separate lids.',
                  'Speaker slides down. Screen moves down onto the reversed base slots.',
                  'Three printed pieces; stand and flat plinth form one solid.',
@@ -103,8 +105,8 @@ for name,shape in parts.items():
     assert shape.isValid() and len(shape.Solids())==1,(name,len(shape.Solids()))
     shape.exportBrep(str(OUT/'verification'/f'{name}.brep'))
     cq.exporters.export(shape,str(OUT/'STEP'/f'{name}.step'))
-    if name in ['01_DLC_shell','02_DLC_speaker']:
-        printable=shape.rotate((0,0,0),(1,0,0),180).translate((0,0,22 if name=='01_DLC_shell' else 52))
+    if name in ['shell','speaker']:
+        printable=shape.rotate((0,0,0),(1,0,0),180).translate((0,0,22 if name=='shell' else 52))
     else:printable=to_print(shape)
     b=printable.BoundingBox();printable=printable.translate((0,-(b.ymin+b.ymax)/2,-b.zmin))
     path=OUT/'STL'/f'{name}.stl'
@@ -117,13 +119,13 @@ for name,shape in parts.items():
     print(report['parts'][name],flush=True)
 cq.Compound.makeCompound(clips).exportBrep(str(OUT/'verification/speaker_clips.brep'))
 assembly=cq.Assembly(name='ESP32_P4_enclosure')
-for name,col in [('01_DLC_shell',(.48,.54,.56)),('02_DLC_speaker',(.26,.32,.35)),('03_stand',(.26,.32,.35))]:
+for name,col in [('shell',(.48,.54,.56)),('speaker',(.26,.32,.35)),('stand',(.26,.32,.35))]:
     assembly.add(parts[name],name=name,color=cq.Color(*col))
 assembly.export(str(OUT/'STEP/assembly.step'))
 # Standard flat-print test adapter; follows the speaker printing direction.
 adapter=flat_adapter()
 adapter.exportBrep(str(OUT/'verification/adapter_tile.brep'))
-cq.exporters.export(adapter,str(OUT/'STEP/DLC20_adapter_tile.step'))
+cq.exporters.export(adapter,str(OUT/'STEP/expansion_adapter.step'))
 (ROOT/'cad/parameters.json').write_text(json.dumps(P,indent=2))
 report.update(model_source_sha256=model_sources(),stl_sha256=stl_inputs())
 (OUT/'verification/print_validation.json').write_text(json.dumps(report,indent=2))

@@ -10,11 +10,11 @@
 
 | STL | 数量 | 包围尺寸 mm | 初始打印方向 |
 |---|---:|---|---|
-| [01_DLC_shell.stl](STL/01_DLC_shell.stl) | 1 | 171 × 105.17 × 22 | 背面贴床，屏幕口朝上 |
-| [02_DLC_speaker.stl](STL/02_DLC_speaker.stl) | 1 | 145 × 54 × 35.671 | 网孔底贴床，开口朝上 |
-| [03_stand.stl](STL/03_stand.stl) | 1 | 146 × 104 × 50.8 | 平整底盘贴床 |
+| [shell.stl](STL/shell.stl) | 1 | 171 × 105.17 × 22 | 背面贴床，屏幕口朝上 |
+| [speaker.stl](STL/speaker.stl) | 1 | 145 × 54 × 35.671 | 网孔底贴床，开口朝上 |
+| [stand.stl](STL/stand.stl) | 1 | 146 × 104 × 50.8 | 平整底盘贴床 |
 
-STL 单位 mm，保持 100% 比例和初始方向，关闭支撑，不用自动摆正。STEP 使用装配坐标；`STEP/assembly.step` 为三件装配，`STEP/DLC20_adapter_tile.step` 为扩展插脚模板。
+STL 单位 mm，保持 100% 比例和初始方向，关闭支撑，不用自动摆正。STEP 使用装配坐标；`STEP/assembly.step` 为三件装配，`STEP/expansion_adapter.step` 为扩展插脚模板。
 
 ![打印方向](previews/print_orientation.png)
 
@@ -26,7 +26,7 @@ STL 单位 mm，保持 100% 比例和初始方向，关闭支撑，不用自动�
 
 相机排线先接好，从顶部居中的 22 × 4 mm 圆角口引出。喇叭线通过背面居中的 10 × 7 mm 孔，装好盒子后隐藏，不加扎带。
 
-板端喇叭插头对应位置有 12 × 12 mm 凹位，从该处沿主壳内侧 3.8 mm 宽、约 2.5 mm 深的槽走到居中出线口；插头凹位保留 1.0 mm、线槽保留 1.1 mm 名义外皮。插头实体不在原厂 STEP 中，当前给出的 10 × 10 × 5.5 mm 配合包络是预留值，需按实际插头复测。安装前将线压入槽内，避免夹在板卡和后壳之间。
+板端喇叭插头对应位置有 12 mm 宽的贴壁凹位，凹位止于内腔壁面，不伸入侧壁下方，从该处沿主壳内侧 3.8 mm 宽、约 2.5 mm 深的槽走到居中出线口；插头凹位保留 1.0 mm、线槽保留 1.1 mm 名义外皮。插头实体不在原厂 STEP 中，当前给出的 10 × 10 × 5.5 mm 配合包络是预留值，需按实际插头复测。安装前将线压入槽内，避免夹在板卡和后壳之间。
 
 喇叭振膜朝格栅，从盒子的开口压入，四个支点托住塑料框，两个内部挡扣限位；框边可补薄双面胶防震，避免贴到振膜。外形覆盖 99 × 44 × 20.5 至 100 × 45 × 21.1 mm。
 
@@ -51,12 +51,12 @@ STL 单位 mm，保持 100% 比例和初始方向，关闭支撑，不用自动�
 ## 已做检查
 
 - 三个正式件均为有效单实体、连续封闭 STL，最低点为 Z=0。
-- 91 项装配检查通过，保留完整原厂触摸与 LCD 排线；新增两级玻璃、四组接头轴向余量、板端插头预留、内侧走线与外皮连续性检查。仍覆盖屏幕斜放、模块滑入、重力止挡、喇叭尺寸、TF、相机出口和完整麦克风声路。
+- 92 项装配检查通过，保留完整原厂触摸与 LCD 排线；新增两级玻璃、四组接头轴向余量、板端插头预留、内侧走线与外皮连续性检查。仍覆盖屏幕斜放、模块滑入、重力止挡、喇叭尺寸、TF、相机出口和完整麦克风声路。
 - 两个下排挂槽轮廓外扩 1 mm 后，仍被底座完整遮挡，见 [fit_validation.json](verification/fit_validation.json)。
 - 两模块通过 0.20 mm 逐层承托检查，无新生悬空区域，见 [support_free_geometry.json](verification/support_free_geometry.json)。该检查独立于切片支撑开关。
 - Bambu Studio 02.08.02.61 / P1S 0.4 mm / Generic PETG / 0.20 mm / 4 圈墙 / 15% gyroid 参考切片：三件关闭支撑成功生成刀路，支撑刀路为零、无警告；输入哈希及结果见 [slice_validation.json](verification/slice_validation.json)。
 
-主壳侧面接口和相机开口仍包含桥接；自动支撑算法可能给局部斜面添加支撑，交付方向按关闭支撑使用。已收到实物问题反馈，当前修正仍待复测；CAD 与切片不代替打印变形、配合松紧、承载或桌面触控稳定性验证。包内不附机器专用 G-code。
+主壳侧面接口和相机开口仍包含桥接；自动支撑算法可能给局部斜面添加支撑，交付方向按关闭支撑使用。已收到实物问题反馈，当前修正仍待复测；CAD 与切片不代替打印变形、配合松紧、承载或桌面触控稳定性验证。不提供机器专用 G-code。
 
 ## 源文件
 
@@ -69,6 +69,6 @@ python3 -m venv .venv
 .venv/bin/python cad/check_printability.py
 ```
 
-完整板卡检查和预览需要原厂 `ESP32-P4-WIFI6-Touch-LCD-7B_3d-20251108.stp`：放入根目录，运行 `cad/analyze_board.py` 建立缓存，再运行 `cad/verify_design.py`、`cad/render_design.py`。脚本校验固定参考文件的哈希。下载包不包含原厂文件、喇叭参考图片或缓存。macOS 安装 Bambu Studio 后可运行 `cad/check_slice.py` 重做参考切片，脚本使用独立临时配置，不修改用户设置。
+完整板卡检查和预览需要原厂 `ESP32-P4-WIFI6-Touch-LCD-7B_3d-20251108.stp`：放入根目录，运行 `cad/analyze_board.py` 建立缓存，再运行 `cad/verify_design.py`、`cad/render_design.py`。脚本校验固定参考文件的哈希。仓库及 Release 不包含原厂文件、喇叭参考图片或缓存。macOS 安装 Bambu Studio 后可运行 `cad/check_slice.py` 重做参考切片，脚本使用独立临时配置，不修改用户设置。
 
 完整步骤见 [开发说明](../../docs/DEVELOPMENT.md)，项目约束见 [AGENTS.md](../../AGENTS.md)。本项目原创内容采用 [MIT License](../../LICENSE)，第三方资料范围见 [THIRD_PARTY_NOTICES.md](../../THIRD_PARTY_NOTICES.md)。

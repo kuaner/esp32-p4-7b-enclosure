@@ -10,7 +10,7 @@ from fit_reference import assembled_screen_component,component
 
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'output/current';DEST=OUT/'previews'
 read=lambda n:cq.Shape.importBrep(str(OUT/'verification'/f'{n}.brep'))
-body=read('01_DLC_shell');pod=read('02_DLC_speaker');stand=read('03_stand')
+body=read('shell');pod=read('speaker');stand=read('stand')
 GRAY=(.48,.54,.56);DARK=(.26,.32,.35);BG='#f4f7f9';INK='#203743';MUTED='#607681'
 FONT=os.environ.get('CAD_CJK_FONT')
 if not FONT:
@@ -112,7 +112,7 @@ d.text((45,24),'实物反馈修正 · 实际 CAD 剖面与内侧结构',font=fon
 labels=[('屏幕短边 · 前后两级玻璃轮廓','玻璃前沿 99.17 mm，后部 98.77 mm；长边保持原尺寸。'),
         ('局部排线避让 · 保留完整原厂 FPC','触摸排线根部开台阶缺口；LCD 排线设局部斜顶凹位。'),
         ('挂钩夹持 · 名义总余量 0.25 mm','橙色为真实喇叭挂钩剖面；底座同步采用较短夹持段。'),
-        ('喇叭插头凹位 + 内侧走线槽','橙色为真实凹位和槽底；12×12 mm 凹位接 3.8 mm 槽。')]
+        ('贴壁插头凹位 + 内侧走线槽','橙色为凹位和槽底；凹位止于内壁，不留悬空薄边。')]
 for i,(name,its,kwargs) in enumerate(detail_specs):
     path=DEST/f'detail_{name}.png'
     render(its,path,size=(940,500),**kwargs)

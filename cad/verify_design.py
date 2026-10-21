@@ -1,4 +1,4 @@
-"""Discrete mechanical assembly checks for the DLC concept, not strength proof."""
+"""Discrete mechanical assembly checks for the gravity mounts, not strength proof."""
 from pathlib import Path
 import json, math
 import cadquery as cq
@@ -11,7 +11,7 @@ from evidence import hashes,model_sources,stl_inputs
 
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'output/current/verification'
 read=lambda n:cq.Shape.importBrep(str(OUT/f'{n}.brep'))
-body=read('01_DLC_shell');pod=read('02_DLC_speaker');stand=read('03_stand')
+body=read('shell');pod=read('speaker');stand=read('stand')
 checks={}
 def check(name,a,b):
     ab=a.BoundingBox();bb=b.BoundingBox()
@@ -122,6 +122,10 @@ check('board_speaker_wire_vs_electronics',board_wire_envelope(),board)
 for name,x,y,z in [('plug',*BOARD_PLUG_XY,21.05),('channel',-24.25,29.4675,21.0)]:
     probe=box(4,4,.9,x,y,z);missing=probe.cut(body).Volume()
     checks[f'{name}_recess_preserves_outer_skin']={'missing_mm3':round(missing,7),'pass':missing<.001}
+# The wall beside the recess must extend down continuously, with no undercut roof.
+wall_probe=box(9,.8,2.5,BOARD_PLUG_XY[0],50.4,18.45)
+missing=wall_probe.cut(body).Volume()
+checks['plug_recess_sidewall_is_continuous']={'missing_mm3':round(missing,7),'pass':missing<.001}
 check('TF_card_path',box(11.5,18,1.5,2.13,-51,8.85),body)
 # A conservative ribbon-only probe through the requested top opening.
 camera=box(18,15,.4,0,53.67,15.5)
@@ -141,7 +145,7 @@ for y in SPEC['rows']:
 notes={'revision':'current','screen_reference':reference_notes(),
        'screen_case_candidate_count':len(candidates),'total_screen_components':len(components),
        'candidate_culling':'Only AABBs wholly in guaranteed empty core X +/-82.44,Y[-47.95,49.95],Z(1.9,14.79) excluded.',
-       'mechanical_only':'DLC-20 is a project mechanical interface, not an electrical standard.',
+       'mechanical_only':'Gravity mount is a project mechanical interface, not an electrical standard.',
        'load':'Opposite slot orientations seat both loads under gravity; no auxiliary lock. Lift along the rear plane to remove.',
        'camera':'22 x 4 mm top-centre ribbon exit; no camera mount.',
        'printing':'Support disabled; geometry-audited continuous growth and short two-ended bridges.',
@@ -151,7 +155,7 @@ notes={'revision':'current','screen_reference':reference_notes(),
        'speaker_plug':'Board-side PH2.0 H7 position from vendor model. Mating plug allowance is assumed 10 x 10 x 5.5 mm, not a measured mating-part model.'}
 (OUT/'fit_validation.json').write_text(json.dumps({'checks':checks,'notes':notes,
     'model_source_sha256':model_sources(),'stl_sha256':stl_inputs(),
-    'brep_sha256':hashes([OUT/f'{n}.brep' for n in ['01_DLC_shell','02_DLC_speaker','03_stand','speaker_clips']]),
+    'brep_sha256':hashes([OUT/f'{n}.brep' for n in ['shell','speaker','stand','speaker_clips']]),
     'vendor_sha256':source['sha256']},indent=2))
 print('FIT_REPORT_SAVED',flush=True)
 assert all(v['pass'] for v in checks.values()),[k for k,v in checks.items() if not v['pass']]

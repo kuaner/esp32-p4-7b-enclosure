@@ -19,8 +19,8 @@ for name,digest in manifest.items():
     assert not name.startswith('design/') and path.suffix not in ['.brep','.stp','.dwg','.pdf','.gcode'], name
     assert path.name!='.DS_Store', name
     actual=hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
-    assert actual==digest, 'Release changed; regenerate checked package: '+name
-parts=['01_DLC_shell','02_DLC_speaker','03_stand']
+    assert actual==digest, 'Release files changed; refresh the checked manifest: '+name
+parts=['shell','speaker','stand']
 assert sorted(p.stem for p in (OUT/'STL').glob('*.stl'))==parts
 for name in parts:
     for suffix,folder in [('stl','STL'),('step','STEP')]:
@@ -30,11 +30,12 @@ layer=read('support_free_geometry.json');sliced=read('slice_validation.json')
 assert set(build['parts'])==set(parts) and all(
     p['valid_CAD'] and p['watertight'] and p['solids']==1 and abs(p['z_min'])<.001
     for p in build['parts'].values())
-assert len(fit['checks'])==91 and all(p['pass'] for p in fit['checks'].values())
+assert len(fit['checks'])==92 and all(p['pass'] for p in fit['checks'].values())
 for name in ['complete_touch_fpc_and_glass_vs_case','complete_lcd_fpc_and_metal_vs_case',
              'board_speaker_plug_allowance','board_speaker_wire_channel',
              'speaker_joint_-62.5_axial_play','speaker_joint_62.5_axial_play',
-             'pedestal_joint_-62.5_axial_play','pedestal_joint_62.5_axial_play']:
+             'pedestal_joint_-62.5_axial_play','pedestal_joint_62.5_axial_play',
+             'plug_recess_sidewall_is_continuous']:
     assert fit['checks'][name]['pass'],name
 assert set(layer['parts'])==set(parts[1:]) and all(p['pass'] for p in layer['parts'].values())
 assert set(sliced['parts'])==set(parts) and not sliced['support_enabled']
@@ -47,4 +48,4 @@ for report in [build,fit,layer]:
         for name,digest in report[field].items():assert manifest[name]==digest, name
 expected=json.loads((ROOT/'cad/vendor_reference.json').read_text())
 assert fit['vendor_sha256']==expected['sha256']
-print(f'RELEASE_VERIFIED: {len(manifest)} files, 3 parts, 91 fit checks, 2 layer audits, 3 slices')
+print(f'RELEASE_VERIFIED: {len(manifest)} files, 3 parts, 92 fit checks, 2 layer audits, 3 slices')

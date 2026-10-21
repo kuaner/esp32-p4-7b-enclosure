@@ -133,7 +133,7 @@
     "flex_relief": "Open touch-FPC seat notch and chamfer-roof LCD pocket; complete FPC geometry retained",
     "speaker_plug_pocket": [
       12,
-      12,
+      11.015,
       2.6
     ],
     "speaker_plug_xy": [
@@ -142,10 +142,11 @@
     ],
     "speaker_wire_channel_width": 3.8,
     "speaker_wire_channel_depth": 2.5,
-    "physical_status": "Prototype feedback received; corrections awaiting recheck"
+    "physical_status": "Prototype feedback received; corrections awaiting recheck",
+    "speaker_plug_pocket_limit_y": 49.95
   },
   "parts": {
-    "01_DLC_shell": {
+    "shell": {
       "valid_CAD": true,
       "watertight": true,
       "solids": 1,
@@ -154,10 +155,10 @@
         105.17,
         22.0
       ],
-      "volume_cm3": 91.383,
+      "volume_cm3": 91.41,
       "z_min": 0.0
     },
-    "02_DLC_speaker": {
+    "speaker": {
       "valid_CAD": true,
       "watertight": true,
       "solids": 1,
@@ -169,7 +170,7 @@
       "volume_cm3": 77.587,
       "z_min": 0.0
     },
-    "03_stand": {
+    "stand": {
       "valid_CAD": true,
       "watertight": true,
       "solids": 1,
@@ -183,9 +184,9 @@
     }
   },
   "quantity": {
-    "01_DLC_shell": 1,
-    "02_DLC_speaker": 1,
-    "03_stand": 1
+    "shell": 1,
+    "speaker": 1,
+    "stand": 1
   },
   "notes": [
     "No locking keys, pin holes, access windows or separate lids.",
@@ -195,17 +196,17 @@
     "Prototype feedback identified opening, FPC and hook-play issues; current corrections require a physical recheck."
   ],
   "model_source_sha256": {
-    "cad/build_design.py": "e395b14e37ec088f3203f564991bf9c501d00ed1491c46e338709201f2cd742a",
-    "cad/interface.py": "e52b4bec2f1df0c2ca4cc689f8a27afed943149bc3118fcfc34d14df37291f05",
-    "cad/parameters.json": "8326c4afccb14006b7d9ffc67892f4435338433f91af396cfb625aaec5f13a1c",
+    "cad/build_design.py": "c6e527a3d193a6b64d0160796cc26592dbb2607dfd6253cec3a117ccea401e77",
+    "cad/interface.py": "e5600ab14a7e4054e31e2ea24d5740398a8e2a6c702355da7edd9663980ff784",
+    "cad/parameters.json": "f13236c4d46af981b07e1c47d79465424ce42018b1957cd03d24722754491d96",
     "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
     "cad/screen_geometry.py": "6973b97aa3abb066b859e5c22023ea98b822cde69f7dbbd025c6a11b7f49d4d7",
     "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de",
-    "cad/wire_route.py": "581bf432bc3bcf3bbb84c82a54823a9b4a19cfe5df4e06d76b9b4af4d36ab048"
+    "cad/wire_route.py": "7c9cecb2222bc83d3eadbc06f6f5bf0c1370f0f7d4348743020bfdc916fa6c70"
   },
   "stl_sha256": {
-    "output/current/STL/01_DLC_shell.stl": "f786dcd9b99e2f0978b8bd01dbc72b0a5603c1df218a825a9c1d1607d0e27401",
-    "output/current/STL/02_DLC_speaker.stl": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
-    "output/current/STL/03_stand.stl": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a"
+    "output/current/STL/shell.stl": "a7805cf72a278ed258fc740175f7741da67eaad433cf2126194fe0e799fd308d",
+    "output/current/STL/speaker.stl": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
+    "output/current/STL/stand.stl": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a"
   }
 }

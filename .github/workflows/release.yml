@@ -2,11 +2,11 @@ name: Release models
 
 on:
   push:
-    tags: ['model-*']
+    tags: ['**']
   workflow_dispatch:
     inputs:
       tag:
-        description: Existing model-YYYYMMDD tag (optional .N suffix)
+        description: Existing Git tag to release
         required: true
         type: string
 
@@ -22,6 +22,7 @@ jobs:
     uses: ./.github/workflows/cad.yml
     with:
       ref: ${{ inputs.tag || github.ref }}
+      export_models: true
     permissions:
       contents: read
 
@@ -43,34 +44,36 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
-      - name: Validate tag and checked exports
+      - name: Validate tag and checked inputs
         shell: bash
         run: |
-          [[ "$RELEASE_TAG" =~ ^model-[0-9]{8}(\.[0-9]+)?$ ]] || { echo 'Expected model-YYYYMMDD or model-YYYYMMDD.N'; exit 1; }
+          git check-ref-format "refs/tags/$RELEASE_TAG"
           test "$(git rev-parse "refs/tags/$RELEASE_TAG^{commit}")" = "$(git rev-parse HEAD)"
           python cad/check_release.py
-      - name: Package committed models on GitHub
+      - name: Remove checkout exports before downloading build output
+        run: rm -r output/current/STL output/current/STEP
+      - name: Download rebuilt models
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: models
+          path: output/current
+      - name: Prepare model checksums
         run: |
-          python cad/package_design.py
-          python cad/check_release.py
-          git diff --exit-code
+          python cad/prepare_release.py
       - name: Publish model assets
         shell: bash
         run: |
           cat > "$RUNNER_TEMP/release-notes.md" <<'NOTES'
-          当前模型由 GitHub Actions 检查并自动打包。
+          - `shell`：主壳；`speaker`：喇叭盒；`stand`：底座，各提供 STL 和 STEP。
+          - `assembly.step`：装配；`expansion_adapter.step`：扩展接口模板。
+          - `SHA256SUMS.txt`：文件校验值。
 
-          - `ESP32_P4_7B_current.zip`：STL、STEP、源码、装配说明、预览、AGENTS.md、MIT 许可和检查报告。
-          - 三个独立 STL：主壳、喇叭盒和一体底座。保持初始方向和 100% 比例，关闭支撑。
-          - `assembly.step`：可编辑装配模型。
-          - `SHA256SUMS.txt`：下载文件的 SHA-256 校验值。
-
-          已完成 CAD、91 项离散装配检查、两模块逐层几何检查及参考切片。已根据打样反馈修正短边、FPC 避让、挂钩夹持和板端走线；当前修正仍需实物复测。CI 不复跑依赖原厂文件的配合检查或 macOS Bambu 切片，只验证其与当前源码、导出的哈希关联。
-
-          原厂板卡资料、第三方喇叭图片、缓存和机器专用 G-code 不在发布包内。
+          模型由此 tag 自动构建。STL 保持初始方向、100% 比例，关闭支撑。当前修正仍需实物复测。
           NOTES
-          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            gh release upload "$RELEASE_TAG" output/ESP32_P4_7B_current.zip output/current/STL/*.stl output/current/STEP/assembly.step output/SHA256SUMS.txt --clobber
+          assets=(output/current/STL/*.stl output/current/STEP/*.step output/SHA256SUMS.txt)
+          if gh release view -- "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload --clobber -- "$RELEASE_TAG" "${assets[@]}"
+            gh release edit --title "$RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md" -- "$RELEASE_TAG"
           else
-            gh release create "$RELEASE_TAG" output/ESP32_P4_7B_current.zip output/current/STL/*.stl output/current/STEP/assembly.step output/SHA256SUMS.txt --verify-tag --title "当前模型 · ${RELEASE_TAG#model-}" --notes-file "$RUNNER_TEMP/release-notes.md"
+            gh release create --verify-tag --title "$RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md" -- "$RELEASE_TAG" "${assets[@]}"
           fi

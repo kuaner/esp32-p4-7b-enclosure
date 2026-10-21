@@ -8,7 +8,7 @@ Open-source, CadQuery-based printable enclosure for the Waveshare ESP32-P4-WIFI6
 
 ## 下载与使用
 
-- [自动发布的模型与设计包](https://github.com/kuaner/esp32-p4-7b-enclosure/releases/latest)：独立 STL、装配 STEP、完整 ZIP 和 SHA-256 校验值。
+- [自动发布的模型](https://github.com/kuaner/esp32-p4-7b-enclosure/releases/latest)：各零件 STL / STEP、装配、扩展模板和 SHA-256 校验值。
 - [打印与装配说明](output/current/README.md)：打印朝向、螺丝、安装顺序和拆卸动作。
 - [STL 打印文件](output/current/STL/) / [STEP 可编辑模型](output/current/STEP/) / [装配 STEP](output/current/STEP/assembly.step)。
 
@@ -16,9 +16,9 @@ Open-source, CadQuery-based printable enclosure for the Waveshare ESP32-P4-WIFI6
 
 | 零件 | 包围尺寸 mm | 打印朝向 | 数量 |
 |---|---|---|---:|
-| [主壳](output/current/STL/01_DLC_shell.stl) | 171 × 105.17 × 22 | 背面贴床，屏幕口朝上 | 1 |
-| [喇叭盒](output/current/STL/02_DLC_speaker.stl) | 145 × 54 × 35.671 | 网孔底贴床，开口朝上 | 1 |
-| [底座](output/current/STL/03_stand.stl) | 146 × 104 × 50.8 | 平整底盘贴床 | 1 |
+| [主壳](output/current/STL/shell.stl) | 171 × 105.17 × 22 | 背面贴床，屏幕口朝上 | 1 |
+| [喇叭盒](output/current/STL/speaker.stl) | 145 × 54 × 35.671 | 网孔底贴床，开口朝上 | 1 |
+| [底座](output/current/STL/stand.stl) | 146 × 104 × 50.8 | 平整底盘贴床 | 1 |
 
 三件各自是一体件，底座的立架与底盘不拆分。参考切片使用 PETG、0.4 mm 喷嘴、0.20 mm 层高、4 圈墙和 15% gyroid 填充。主壳接口与相机出口包含桥接，需要打印机具备相应桥接能力。
 
@@ -29,7 +29,7 @@ Open-source, CadQuery-based printable enclosure for the Waveshare ESP32-P4-WIFI6
 - **接口外露**：电源、开关、按键、TF 和双麦克风声路保留；顶部预留居中 22 × 4 mm 摄像头排线口，只提供出线空间。
 - **外挂喇叭**：按 99.5 × 44.5 × 20.8 mm 的 45100 喇叭设计，一体开口盒、内部挡扣与框边支点限位，可补薄双面胶；背面居中出线，装配后隐藏。
 - **模块化挂接**：双插脚贴入宽口后滑动 8 mm 挂住，无独立锁扣。上排挂喇叭，下排翻转用于底座承托；底座安装后完整遮住对应挂槽。
-- **夹持与内藏走线**：挂钩按斜肩实际接触位置控制，名义轴向总余量 0.25 mm；主壳内侧有 12 × 12 mm 喇叭插头凹位和 3.8 mm 走线槽，接到居中出线口，槽底保留约 1 mm 外皮。
+- **夹持与内藏走线**：挂钩按斜肩实际接触位置控制，名义轴向总余量 0.25 mm；主壳内侧有 12 mm 宽的贴壁喇叭插头凹位和 3.8 mm 走线槽，接到居中出线口，槽底保留约 1 mm 外皮。
 - **一体菱形底座**：20 个菱形镂空、平整圆角底盘，打印时底盘直接贴床。
 
 ![装配分解](output/current/previews/exploded.png)
@@ -40,7 +40,7 @@ Open-source, CadQuery-based printable enclosure for the Waveshare ESP32-P4-WIFI6
 
 ## 扩展接口
 
-这是本项目的**机械接口**，不包含电气定义。源文件为 [cad/interface.py](cad/interface.py)，提供 [空白扩展模板 STEP](output/current/STEP/DLC20_adapter_tile.step)。
+这是本项目的**机械接口**，不包含电气定义。源文件为 [cad/interface.py](cad/interface.py)，提供 [空白扩展模板 STEP](output/current/STEP/expansion_adapter.step)。
 
 | 参数 | mm |
 |---|---:|
@@ -59,7 +59,7 @@ Open-source, CadQuery-based printable enclosure for the Waveshare ESP32-P4-WIFI6
 | 检查 | 当前结果 | 边界 |
 |---|---|---|
 | CAD / STL | 三件均为有效单实体、封闭网格、Z 最低点为 0 | 不验证材料强度 |
-| 装配 | 91 项通过，含完整排线、两级玻璃、四组挂钩间隙、走线和挂槽遮挡 | 离散位置检查，非连续运动或疲劳仿真 |
+| 装配 | 92 项通过，含完整排线、两级玻璃、四组挂钩间隙、走线和挂槽遮挡 | 离散位置检查，非连续运动或疲劳仿真 |
 | 逐层几何 | 喇叭盒、底座通过 0.20 mm 逐层承托检查 | 不模拟挤出、冷却和变形 |
 | 参考切片 | 三件关闭支撑成功，支撑刀路为零，无警告 | Bambu Studio / P1S / Generic PETG 参考配置 |
 | 修正后实物复测 | **待完成** | 已有打样反馈；当前缩口、排线避让、挂钩松紧和插头配合需复测 |
@@ -87,6 +87,6 @@ Windows 可使用 `.venv\Scripts\activate` 激活环境。Linux 如缺少 OpenGL
 
 欢迎提交实测反馈、尺寸修正和扩展模块，参见 [CONTRIBUTING.md](CONTRIBUTING.md)。AI 编程助手的项目约束与检查命令在 [AGENTS.md](AGENTS.md)。
 
-Release 由 [GitHub Actions](.github/workflows/release.yml) 自动生成：推送 `model-YYYYMMDD` 标签后，先检查已提交的文件与报告，再重建 CAD 和逐层检查，最后在云端打包并上传模型；不依赖本地 ZIP。具体步骤见 [发布流程](docs/DEVELOPMENT.md#发布流程)。
+推送任意 Git tag 即由 [GitHub Actions](.github/workflows/release.yml) 自动构建并发布模型，Release 标题就是 tag 名。附件直接提供 `shell`、`speaker`、`stand` 的 STL / STEP，以及装配、扩展模板和校验文件。源码使用 GitHub 自带的 Source code 下载入口。具体步骤见 [发布流程](docs/DEVELOPMENT.md#发布流程)。
 
 本项目原创源码、模型及文档采用 [MIT License](LICENSE)。原厂板卡 STEP / DWG / PDF、第三方喇叭图片及本地缓存不随仓库或发布包分发，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。本项目独立维护，与 Waveshare 无隶属关系；板卡资料参阅 [Waveshare 官方资源](https://docs.waveshare.com/ESP32-P4-WIFI6-Touch-LCD-7B/Resources-And-Documents)。

@@ -13,7 +13,7 @@ python cad/build_design.py
 python cad/check_printability.py
 ```
 
-`check_release.py` 仅依赖标准库，验证发布清单和证据，适合首次构建前运行。构建会覆盖相应导出；STEP 元数据时间可能变化，需重跑必要检查后重新打包生成清单。
+`check_release.py` 仅依赖标准库，验证发布清单和证据，适合首次构建前运行。构建会覆盖相应导出；STEP 元数据时间可能变化，需重跑必要检查后刷新文件清单。
 
 Windows 使用 `.venv\Scripts\activate`。Linux 可能需要 `libgl1 libegl1 libopengl0`；离屏渲染还依赖可用的 VTK/OpenGL 后端。CI 执行模型构建与逐层检查，不运行依赖原厂文件的装配检查或 macOS Bambu 切片。
 
@@ -25,7 +25,7 @@ Windows 使用 `.venv\Scripts\activate`。Linux 可能需要 `libgl1 libegl1 lib
 f2104dc257ee8575459ddf74404e32faf81e4bcda23a8bfec23b6604c089986c
 ```
 
-原厂附件可能更新；无法获取此日期文件时请联系厂商。不要直接替换成其他文件：当前坐标和柔性排线排除依赖此文件的组件编号。脚本校验原文件哈希，不改写原件。
+原厂附件可能更新；无法获取此日期文件时请联系厂商。不要直接替换成其他文件：当前坐标和元件检查依赖此文件的组件编号。脚本校验原文件哈希，不改写原件。
 
 ```sh
 python cad/analyze_board.py
@@ -63,25 +63,31 @@ CAD_CJK_FONT=/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc python cad/r
 模型变更后完成相应检查和渲染，本地只刷新发布清单，不创建 ZIP：
 
 ```sh
-python cad/package_design.py --manifest-only
+python cad/prepare_release.py --manifest-only
 python cad/check_release.py
 ```
 
-提交并推送当前源码、导出、文档及报告后，推送一个发布标签，例如：
+提交并推送源码、导出和检查报告后，打 tag 并推送即可：
 
 ```sh
-git tag -a model-20261020 -m 'Publish current enclosure models'
-git push origin main
-git push origin model-20261020
+git tag 20261021
+git push origin 20261021
 ```
 
-日期示例需替换为实际发布日期；同日多次发布可使用 `model-20261020.2`。标签用于标记 Git 提交，不增加并行模型目录。也可以在 Actions 中手动运行 **Release models**，填写已存在的同格式标签；它会检查指定标签的提交并补充或重新上传对应 Release 资产。
+标签名自行选择，不要求日期或固定前缀。Release 标题直接使用 tag 名。也可在 Actions 中手动运行 **Release models**，填写已有 tag 重新构建发布。
 
-[release.yml](../.github/workflows/release.yml) 先调用 CAD 检查流程，验证清单、重建三件 CAD 并做两模块逐层检查。通过后在独立的干净检出中打包**该提交已经检查过的导出文件**，避免将跨平台重建产生的 STEP 元数据变动混入原证据。发布任务只需 Python 标准库与 GitHub CLI。
+CI 先验证提交的文件和证据，再从该 tag 重建 CAD 并做逐层检查；重建 STL 必须与已做完整配合和切片检查的输入哈希一致。发布任务接收本次构建的模型，直接上传：
 
-云端生成唯一完整设计包 `ESP32_P4_7B_current.zip`，并单独上传三份 STL、`assembly.step` 和 `SHA256SUMS.txt`。包内含许可、说明、`AGENTS.md`、开发指南、当前源码和模型；不包含原厂文件、缓存、第三方图片或 G-code。`release_sha256.json` 记录包内文件哈希，其自身不递归纳入清单。Release 任务具有仓库内容写入权限；普通 CAD 检查只有读取权限。
+- `shell.stl` / `shell.step`：主壳。
+- `speaker.stl` / `speaker.step`：喇叭盒。
+- `stand.stl` / `stand.step`：底座。
+- `assembly.step`：装配。
+- `expansion_adapter.step`：扩展接口模板。
+- `SHA256SUMS.txt`：以上八个文件的校验值。
 
-几何变更必须重新生成对应证据。打包检查模型有效性、配合、逐层结果、源码指纹和 STL 切片哈希；不匹配时重跑检查，不要手改 `pass` 字段。CI 不下载原厂文件，不假称在 Linux 复跑了原厂配合检查或 macOS Bambu 切片。发布的是与提交源码及证据对应的模型。
+不生成额外 ZIP。源码使用 GitHub 自带的 Source code 下载入口。STEP 由该次构建生成，元数据时间可能变化，校验值按实际发布文件计算。仓库文件清单仍用于核对已提交的源码、模型和检查证据。
+
+几何改动后必须重新生成对应证据。CI 不下载原厂文件，也不假称在 Linux 复跑了完整板卡检查或 macOS Bambu 切片。普通构建只读取仓库；上传 Release 的任务拥有仓库内容写入权限。
 
 ## 坐标与接口
 

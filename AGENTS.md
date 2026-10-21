@@ -16,6 +16,7 @@ Editable source is `cad/`; `output/current/` is the sole current deliverable. Up
 - Keep power, switch, buttons, TF access and both full microphone rays clear. Camera accommodation is only the centred 22 × 4 mm top ribbon opening.
 - Speaker nominal: 99.5 × 44.5 × 20.8 mm; maximum 100 × 45 × 21.1 mm. Open pod with outward grille, frame supports and simple internal clips, no separate lid. Optional thin tape touches the frame only.
 - Speaker lead passes through the centred shell opening and is concealed by the mounted pod. No ties or unnecessary side openings.
+- The speaker plug recess must stop at the inner wall (Y=49.95), without cutting beneath the sidewall or leaving a suspended lip. Preserve the full-height sidewall check.
 - Retain the board-side speaker plug recess and interior channel to the centred outlet. The mating plug allowance is provisional; do not claim it was measured from the vendor model.
 - Expansion interface: gravity hooks, 8 mm travel, 125 mm horizontal pitch. Upper row hangs modules downward; lower row is reversed so the screen moves downward onto a fixed base. No independent latch, sliding key, pin or anti-lift lock.
 - Hooks must constrain installed axial play, not merely block a distant pull-out test. Dimension the tapered shoulder's contact at the slot edge: nominal total normal play is 0.25 mm. Check both directions on all four real joints.
@@ -27,7 +28,7 @@ These describe the accepted design; later explicit user instructions can change 
 
 ## Files and coordinates
 
-`build_design.py` builds the shell and pod and exports all models. `stand.py` defines the stand and transforms. `interface.py` defines receivers, hooks and the blank adapter. `fit_reference.py` defines the vendor frame shift while retaining all original FPC geometry. `verify_design.py` checks discrete CAD assembly positions and real joint play. `check_printability.py` audits module layers. `check_slice.py` performs optional real Bambu slicing in an isolated temporary configuration. `render_design.py` renders actual CAD. `package_design.py` and `check_release.py` package and validate the release.
+`build_design.py` builds the shell and pod and exports all models. `stand.py` defines the stand and transforms. `interface.py` defines receivers, hooks and the blank adapter. `fit_reference.py` defines the vendor frame shift while retaining all original FPC geometry. `verify_design.py` checks discrete CAD assembly positions and real joint play. `check_printability.py` audits module layers. `check_slice.py` performs optional real Bambu slicing in an isolated temporary configuration. `render_design.py` renders actual CAD. `prepare_release.py` and `check_release.py` prepare checksums and validate release evidence.
 
 Engineering coordinates use +Y up and +Z toward the rear. STEP uses assembly coordinates; STL uses printing coordinates with minimum Z at zero. `screen_geometry.py` defines the stepped glass and local FPC reliefs. Use the existing transforms; do not hand-position previews or change only one export.
 
@@ -47,7 +48,7 @@ python cad/analyze_board.py
 python cad/verify_design.py
 python cad/check_slice.py
 python cad/render_design.py
-python cad/package_design.py --manifest-only
+python cad/prepare_release.py --manifest-only
 python cad/check_release.py
 ```
 
@@ -55,10 +56,12 @@ Bambu checks require the documented macOS app/profile; never overwrite user sett
 
 Require valid single solids and watertight connected meshes for all three parts. Preserve gravity seating, pull-out blocking, acoustic clearance, hidden wiring, aperture coverage and installation motions. Fit checks sample discrete positions; do not claim continuous sweep or strength simulation.
 
-After geometry changes regenerate affected STL, STEP, previews and evidence together. Changed STL requires new slice evidence. Do not describe CAD, layer audits or slicing as physical validation. Physical prototype feedback identified an oversized short opening, FPC pressure and loose hooks; the current corrections await a physical recheck. Local work refreshes the manifest only; the GitHub release workflow creates ZIPs and uploads model assets after checks pass. See the release procedure in `docs/DEVELOPMENT.md`.
+After geometry changes regenerate affected STL, STEP, previews and evidence together. Changed STL requires new slice evidence. Do not describe CAD, layer audits or slicing as physical validation. Physical prototype feedback identified an oversized short opening, FPC pressure and loose hooks; the current corrections await a physical recheck. Local work refreshes the manifest only; the GitHub release workflow builds and publishes individual model files after checks pass. See the release procedure in `docs/DEVELOPMENT.md`.
 
 ## Publication hygiene
 
-Original code, models and documentation use MIT. Follow `THIRD_PARTY_NOTICES.md`: do not publish vendor STEP/DWG/PDF, BREP cache, the speaker reference image, environment files, credentials, personal absolute paths or machine-specific G-code. Respect `.gitignore` and the packaging allowlist. Preserve original third-party files locally.
+Original code, models and documentation use MIT. Follow `THIRD_PARTY_NOTICES.md`: do not publish vendor STEP/DWG/PDF, BREP cache, the speaker reference image, environment files, credentials, personal absolute paths or machine-specific G-code. Respect `.gitignore` and the release allowlist. Preserve original third-party files locally.
 
 Use relative repository links. Keep download links, archive contents and hashes consistent. Publication and messaging actions require the user's authorization; this file grants no standing permission to publish future changes.
+
+Release filenames are `shell`, `speaker` and `stand` in STL/STEP, plus `assembly.step`, `expansion_adapter.step` and `SHA256SUMS.txt`. Do not add DLC/numeric part prefixes or a custom ZIP. Every pushed tag triggers model construction and publication; the Release title is exactly the tag name.

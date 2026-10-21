@@ -1,4 +1,4 @@
-"""DLC gravity hooks: one slot standard, installed in opposing orientations.
+"""Gravity hooks: one slot standard, installed in opposing orientations.
 
 Engineering +Y is up. A hanging accessory slides down (direction=-1);
 a fixed desktop base is the same interface turned over (direction=+1), so

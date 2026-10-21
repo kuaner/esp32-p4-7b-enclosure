@@ -308,6 +308,10 @@
       "missing_mm3": 0.0,
       "pass": true
     },
+    "plug_recess_sidewall_is_continuous": {
+      "missing_mm3": 0.0,
+      "pass": true
+    },
     "TF_card_path": {
       "intersection_mm3": 0.0,
       "pass": true
@@ -406,7 +410,7 @@
     "screen_case_candidate_count": 13,
     "total_screen_components": 1339,
     "candidate_culling": "Only AABBs wholly in guaranteed empty core X +/-82.44,Y[-47.95,49.95],Z(1.9,14.79) excluded.",
-    "mechanical_only": "DLC-20 is a project mechanical interface, not an electrical standard.",
+    "mechanical_only": "Gravity mount is a project mechanical interface, not an electrical standard.",
     "load": "Opposite slot orientations seat both loads under gravity; no auxiliary lock. Lift along the rear plane to remove.",
     "camera": "22 x 4 mm top-centre ribbon exit; no camera mount.",
     "printing": "Support disabled; geometry-audited continuous growth and short two-ended bridges.",
@@ -416,24 +420,24 @@
     "speaker_plug": "Board-side PH2.0 H7 position from vendor model. Mating plug allowance is assumed 10 x 10 x 5.5 mm, not a measured mating-part model."
   },
   "model_source_sha256": {
-    "cad/build_design.py": "e395b14e37ec088f3203f564991bf9c501d00ed1491c46e338709201f2cd742a",
-    "cad/interface.py": "e52b4bec2f1df0c2ca4cc689f8a27afed943149bc3118fcfc34d14df37291f05",
-    "cad/parameters.json": "8326c4afccb14006b7d9ffc67892f4435338433f91af396cfb625aaec5f13a1c",
+    "cad/build_design.py": "c6e527a3d193a6b64d0160796cc26592dbb2607dfd6253cec3a117ccea401e77",
+    "cad/interface.py": "e5600ab14a7e4054e31e2ea24d5740398a8e2a6c702355da7edd9663980ff784",
+    "cad/parameters.json": "f13236c4d46af981b07e1c47d79465424ce42018b1957cd03d24722754491d96",
     "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
     "cad/screen_geometry.py": "6973b97aa3abb066b859e5c22023ea98b822cde69f7dbbd025c6a11b7f49d4d7",
     "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de",
-    "cad/wire_route.py": "581bf432bc3bcf3bbb84c82a54823a9b4a19cfe5df4e06d76b9b4af4d36ab048"
+    "cad/wire_route.py": "7c9cecb2222bc83d3eadbc06f6f5bf0c1370f0f7d4348743020bfdc916fa6c70"
   },
   "stl_sha256": {
-    "output/current/STL/01_DLC_shell.stl": "f786dcd9b99e2f0978b8bd01dbc72b0a5603c1df218a825a9c1d1607d0e27401",
-    "output/current/STL/02_DLC_speaker.stl": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
-    "output/current/STL/03_stand.stl": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a"
+    "output/current/STL/shell.stl": "a7805cf72a278ed258fc740175f7741da67eaad433cf2126194fe0e799fd308d",
+    "output/current/STL/speaker.stl": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
+    "output/current/STL/stand.stl": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a"
   },
   "brep_sha256": {
-    "output/current/verification/01_DLC_shell.brep": "aeddd5cd4204af2b963f0649beafed878d47b5b135ba580cf0b410849df27219",
-    "output/current/verification/02_DLC_speaker.brep": "84c05acc4336897c3c49adb89143af514b7c8629eedf425bdfc6df55e932c3e6",
-    "output/current/verification/03_stand.brep": "fba9d737d22f29b882da42bf33917597c8fa11dc6a239bd06aca41bad10feb36",
-    "output/current/verification/speaker_clips.brep": "77451d7af0c98b9e4c8b0aade891d99c1780199497cd9ed29b771c181eadf0b4"
+    "output/current/verification/shell.brep": "963fe58ef08eb1a0e15c4a8dc818eb8998afac0d9d182dbeaa1b5cf1cc8f5f18",
+    "output/current/verification/speaker.brep": "84c05acc4336897c3c49adb89143af514b7c8629eedf425bdfc6df55e932c3e6",
+    "output/current/verification/speaker_clips.brep": "77451d7af0c98b9e4c8b0aade891d99c1780199497cd9ed29b771c181eadf0b4",
+    "output/current/verification/stand.brep": "fba9d737d22f29b882da42bf33917597c8fa11dc6a239bd06aca41bad10feb36"
   },
   "vendor_sha256": "f2104dc257ee8575459ddf74404e32faf81e4bcda23a8bfec23b6604c089986c"
 }

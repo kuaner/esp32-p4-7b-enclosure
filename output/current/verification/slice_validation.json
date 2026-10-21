@@ -12,18 +12,18 @@
     "Geometry is checked separately; this slice is not a physical print test."
   ],
   "parts": {
-    "01_DLC_shell": {
-      "input_sha256": "f786dcd9b99e2f0978b8bd01dbc72b0a5603c1df218a825a9c1d1607d0e27401",
+    "shell": {
+      "input_sha256": "a7805cf72a278ed258fc740175f7741da67eaad433cf2126194fe0e799fd308d",
       "return_code": 0,
       "layers": 110,
       "support_toolpath_seconds": 0,
       "warning": "",
-      "estimated_seconds": 19322,
-      "estimated_filament_g": 75.8,
-      "bridge_toolpath_seconds": 1357.6,
+      "estimated_seconds": 19358,
+      "estimated_filament_g": 75.83,
+      "bridge_toolpath_seconds": 1362.2,
       "pass": true
     },
-    "02_DLC_speaker": {
+    "speaker": {
       "input_sha256": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
       "return_code": 0,
       "layers": 178,
@@ -34,15 +34,15 @@
       "bridge_toolpath_seconds": 388.7,
       "pass": true
     },
-    "03_stand": {
+    "stand": {
       "input_sha256": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a",
       "return_code": 0,
       "layers": 254,
       "support_toolpath_seconds": 0,
       "warning": "",
-      "estimated_seconds": 21338,
+      "estimated_seconds": 21337,
       "estimated_filament_g": 67.21,
-      "bridge_toolpath_seconds": 1470.7,
+      "bridge_toolpath_seconds": 1470.5,
       "pass": true
     }
   }
