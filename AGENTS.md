@@ -11,7 +11,7 @@ Editable source is `cad/`; `output/current/` is the sole current deliverable. Up
 ## Accepted constraints
 
 - Three printed pieces: one screen shell, one speaker pod, one stand. Each is a single solid. Do not split the stand upright from its flat plinth.
-- Main shell: sides and rear integrated, open front, stepped flush glass seat. No separate front bezel. Keep the long dimension unchanged and use the smaller STEP glass outlines (front 164.28 × 99.17; rear 163.88 × 98.77). Retain local touch/LCD FPC seat reliefs: physical testing confirmed they are necessary. Do not exclude FPC geometry from clearance checks or widen the entire shell to accommodate the loops.
+- Main shell: sides and rear integrated, open front, stepped flush glass seat. No separate front bezel. Keep the long dimension unchanged and use the smaller STEP glass outlines (front 164.28 × 99.17; rear 163.88 × 98.77). The maintainer has physically confirmed the current glass fit; preserve it. Retain local touch/LCD FPC seat reliefs: both must open through the screen face. Do not restore the LCD chamfer roof or a front crossbar; static installed-FPC clearance alone does not prove the ribbon can enter. Do not exclude FPC geometry from clearance checks or widen the entire shell to accommodate the loops.
 - Screen installation: switch/USB (+X) side first at an angle, then button (-X) side. Original four M2.5 × 8 mm screws, no insert nuts or extra fastener system.
 - Keep power, switch, buttons, TF access and both full microphone rays clear. Camera accommodation is only the centred 22 × 4 mm top ribbon opening.
 - Speaker nominal: 99.5 × 44.5 × 20.8 mm; maximum 100 × 45 × 21.1 mm. Open pod with outward grille, frame supports and simple internal clips, no separate lid. Optional thin tape touches the frame only.
@@ -30,7 +30,7 @@ These describe the accepted design; later explicit user instructions can change 
 
 `build_design.py` builds the shell and pod and exports all models. `stand.py` defines the stand and transforms. `interface.py` defines receivers, hooks and the blank adapter. `fit_reference.py` defines the vendor frame shift while retaining all original FPC geometry. `verify_design.py` checks discrete CAD assembly positions and real joint play. `check_printability.py` audits module layers. `check_slice.py` performs optional real Bambu slicing in an isolated temporary configuration. `render_design.py` renders actual CAD. `prepare_release.py` and `check_release.py` prepare checksums and validate release evidence.
 
-Engineering coordinates use +Y up and +Z toward the rear. STEP uses assembly coordinates; STL uses printing coordinates with minimum Z at zero. `screen_geometry.py` defines the stepped glass and local FPC reliefs. Use the existing transforms; do not hand-position previews or change only one export.
+Engineering coordinates use +Y up and +Z toward the rear. STEP uses assembly coordinates; STL uses printing coordinates with minimum Z at zero. `screen_geometry.py` defines the stepped glass and local FPC reliefs. Use the existing transforms; do not hand-position previews or change only one export. `render_assembly.py` renders the three illustrated installation sheets; the speaker is explicitly labelled as a nominal-size envelope. Keep wiring before screen insertion in the written and illustrated installation order.
 
 ## Verification
 
@@ -48,6 +48,7 @@ python cad/analyze_board.py
 python cad/verify_design.py
 python cad/check_slice.py
 python cad/render_design.py
+python cad/render_assembly.py
 python cad/prepare_release.py --manifest-only
 python cad/check_release.py
 ```
@@ -56,7 +57,7 @@ Bambu checks require the documented macOS app/profile; never overwrite user sett
 
 Require valid single solids and watertight connected meshes for all three parts. Preserve gravity seating, pull-out blocking, acoustic clearance, hidden wiring, aperture coverage and installation motions. Fit checks sample discrete positions; do not claim continuous sweep or strength simulation.
 
-After geometry changes regenerate affected STL, STEP, previews and evidence together. Changed STL requires new slice evidence. Do not describe CAD, layer audits or slicing as physical validation. Physical prototype feedback identified an oversized short opening, FPC pressure and loose hooks; the current corrections await a physical recheck. Local work refreshes the manifest only; the GitHub release workflow builds and publishes individual model files after checks pass. See the release procedure in `docs/DEVELOPMENT.md`.
+After geometry changes regenerate affected STL, STEP, previews and evidence together. Changed STL requires new slice evidence. Do not describe CAD, layer audits or slicing as physical validation. Physical prototype feedback identified an oversized short opening, FPC pressure and loose hooks; the maintainer now confirms the glass fit. The open LCD FPC entry and other unconfirmed corrections await a physical recheck. Local work refreshes the manifest only; the GitHub release workflow builds and publishes individual model files after checks pass. See the release procedure in `docs/DEVELOPMENT.md`.
 
 ## Publication hygiene
 

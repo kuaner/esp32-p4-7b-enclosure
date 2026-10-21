@@ -130,7 +130,7 @@
     "front_mouth_height": 99.77,
     "front_lip_pocket_height": 99.57,
     "screen_reference_basis": "STEP glass profiles; local FPC loops retained",
-    "flex_relief": "Open touch-FPC seat notch and chamfer-roof LCD pocket; complete FPC geometry retained",
+    "flex_relief": "Both touch and LCD FPC notches open through the screen face; complete FPC geometry retained",
     "speaker_plug_pocket": [
       12,
       9.5,
@@ -142,7 +142,7 @@
     ],
     "speaker_wire_channel_width": 3.8,
     "speaker_wire_channel_depth": 2.5,
-    "physical_status": "Prototype feedback received; corrections awaiting recheck",
+    "physical_status": "Glass fit confirmed by physical prototype; open LCD FPC entry awaits recheck",
     "speaker_plug_pocket_limit_y": 48.45,
     "speaker_plug_wall_land": 1.5,
     "speaker_plug_allowance": [
@@ -161,7 +161,7 @@
         105.17,
         22.0
       ],
-      "volume_cm3": 91.462,
+      "volume_cm3": 91.023,
       "z_min": 0.0
     },
     "speaker": {
@@ -199,19 +199,19 @@
     "Speaker slides down. Screen moves down onto the reversed base slots.",
     "Three printed pieces; stand and flat plinth form one solid.",
     "Complete lower mounting apertures are covered by integral pads.",
-    "Prototype feedback identified opening, FPC and hook-play issues; current corrections require a physical recheck."
+    "Physical prototype confirms glass fit; the open LCD FPC entry and other corrected features require a physical recheck."
   ],
   "model_source_sha256": {
-    "cad/build_design.py": "ff4a9d92b94027087ed77bb712787976dff11eeed549e2a1b8dc0e62d3ce7644",
+    "cad/build_design.py": "1f07ada0d46270021e243360d3b77b0c2522841a4ac1482f8da4e9bb439a7186",
     "cad/interface.py": "e5600ab14a7e4054e31e2ea24d5740398a8e2a6c702355da7edd9663980ff784",
-    "cad/parameters.json": "eb28a9bde4e3ce76d75e46e793187e39c9be190974ef4fd9d3b6194bcc6b8b6f",
+    "cad/parameters.json": "e9208cc0697182a03685824c50dba65bcc628ce1263f389b471a92cd987e7a8c",
     "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
-    "cad/screen_geometry.py": "6973b97aa3abb066b859e5c22023ea98b822cde69f7dbbd025c6a11b7f49d4d7",
+    "cad/screen_geometry.py": "8569e7e0a9e27bfbda67d0ceca7efa9f16c93a716ad9d239556ba898263cce91",
     "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de",
     "cad/wire_route.py": "ed2fd86c470e4966307f7a37fcda6b1ecba843840982820bb38b80915d7da800"
   },
   "stl_sha256": {
-    "output/current/STL/shell.stl": "cba9e597f4fe800adbc82280542f8d622dd97d78c34d4b61add3bb0235f8f6cb",
+    "output/current/STL/shell.stl": "756672aeb9026131a2807f26ee197b3871f08ddaf93f402a4970c8af6637061a",
     "output/current/STL/speaker.stl": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
     "output/current/STL/stand.stl": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a"
   }

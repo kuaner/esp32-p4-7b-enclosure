@@ -13,13 +13,13 @@
   ],
   "parts": {
     "shell": {
-      "input_sha256": "cba9e597f4fe800adbc82280542f8d622dd97d78c34d4b61add3bb0235f8f6cb",
+      "input_sha256": "756672aeb9026131a2807f26ee197b3871f08ddaf93f402a4970c8af6637061a",
       "return_code": 0,
       "layers": 110,
       "support_toolpath_seconds": 0,
       "warning": "",
-      "estimated_seconds": 19415,
-      "estimated_filament_g": 75.84,
+      "estimated_seconds": 19216,
+      "estimated_filament_g": 75.32,
       "bridge_toolpath_seconds": 1359.5,
       "pass": true
     },

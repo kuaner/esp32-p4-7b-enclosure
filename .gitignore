@@ -34,5 +34,8 @@ __pycache__/
 !/output/current/previews/mounts.png
 !/output/current/previews/print_orientation.png
 !/output/current/previews/fit_details.png
+!/output/current/previews/assembly_speaker.png
+!/output/current/previews/assembly_screen.png
+!/output/current/previews/assembly_mounts.png
 /output/current/verification/*
 !/output/current/verification/*.json

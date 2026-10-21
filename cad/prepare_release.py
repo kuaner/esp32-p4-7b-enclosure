@@ -12,7 +12,7 @@ pr=read('print_validation.json');fit=read('fit_validation.json')
 layer=read('support_free_geometry.json');sliced=read('slice_validation.json')
 assert pr['revision']==fit['notes']['revision']==layer['revision']==sliced['revision']=='current'
 assert len(pr['parts'])==3 and all(v['valid_CAD'] and v['watertight'] and v['solids']==1 for v in pr['parts'].values())
-assert len(fit['checks'])==92 and all(v['pass'] for v in fit['checks'].values())
+assert len(fit['checks'])==94 and all(v['pass'] for v in fit['checks'].values())
 assert len(layer['parts'])==2 and all(v['pass'] for v in layer['parts'].values())
 assert len(sliced['parts'])==3 and all(v['pass'] for v in sliced['parts'].values())
 for report in [pr,fit,layer]:
@@ -31,14 +31,15 @@ def add(p,arc=None):
     assert p.is_file(),str(p)
     files[arc or str(p.relative_to(ROOT))]=p
 for name in ['README.md','LICENSE','AGENTS.md','CONTRIBUTING.md','THIRD_PARTY_NOTICES.md',
-             '.gitignore','.gitattributes','docs/DEVELOPMENT.md',
+             '.gitignore','.gitattributes','docs/DEVELOPMENT.md','docs/MAKERWORLD.md',
              '.github/workflows/cad.yml','.github/workflows/release.yml']:
     add(ROOT/name)
 add(OUT/'README.md')
 for folder,ext in [('STL','*.stl'),('STEP','*.step'),('verification','*.json')]:
     for p in sorted((OUT/folder).glob(ext)):
         if p.name!='release_sha256.json':add(p)
-for name in ['overview','front','rear','exploded','stand','mounts','print_orientation','fit_details']:
+for name in ['overview','front','rear','exploded','stand','mounts','print_orientation','fit_details',
+             'assembly_speaker','assembly_screen','assembly_mounts']:
     add(OUT/'previews'/f'{name}.png')
 for pattern in ['*.py','*.json','requirements.txt']:
     for p in sorted((ROOT/'cad').glob(pattern)):add(p)

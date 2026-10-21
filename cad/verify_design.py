@@ -57,6 +57,11 @@ print('Exact screen/case candidates',len(candidates),'of',len(components),flush=
 check('installed_screen_vs_case',cq.Compound.makeCompound(candidates),body)
 check('complete_touch_fpc_and_glass_vs_case',components[1337],body)
 check('complete_lcd_fpc_and_metal_vs_case',components[1338],body)
+# Independent ribbon-entry allowances cross the glass-seat edge all the way
+# from the open front into the recess. The previous LCD roof blocked this path
+# even though the installed vendor FPC posed no interference.
+for name,x,width in [('touch',-64.,19.),('lcd',.5,29.)]:
+    check(f'{name}_fpc_front_entry_open',box(width,1.6,10,x,-49.7,-.1),body)
 check('speaker_vs_screen',pod,board)
 check('pedestal_vs_screen',stand,board)
 check('pedestal_vs_speaker',stand,pod)
@@ -153,7 +158,8 @@ notes={'revision':'current','screen_reference':reference_notes(),
        'camera':'22 x 4 mm top-centre ribbon exit; no camera mount.',
        'printing':'Support disabled; geometry-audited continuous growth and short two-ended bridges.',
        'limitations':'Discrete positions, not continuous sweep, strength or fatigue simulation. No anti-lift retention is intended.',
-       'physical_fit':'Prototype feedback received; these corrected dimensions await another physical check.',
+       'physical_fit':'Maintainer physical prototype confirms glass fit. Open LCD FPC entry and other corrected features await another physical check.',
+       'fpc_entry':'Independent front-to-recess ribbon allowance prisms check both entrances; installed vendor FPC clearance alone does not establish installability.',
        'hook_clearance':'Real local joints checked in both normal directions; target total free travel 0.25 mm.',
        'speaker_plug':'Board-side PH2.0 position from vendor model. Provisional 10 x 6.5 x 5.5 mm mating allowance; PH reference housing XY is 5.8 x 4.5 mm (JST ePH.pdf), not a measurement or identification of the user plug.'}
 (OUT/'fit_validation.json').write_text(json.dumps({'checks':checks,'notes':notes,

@@ -23,12 +23,12 @@ P.update(revision='current',speaker_front_z=47.0,pod_front_width=145.,pod_rear_w
          pod_inner=[101.,46.,27.5],pod_radius=6.0,maximum_module_short_bridge=4.5)
 P.update(STAND_PARAMETERS)
 P.update(SCREEN)
-P.update(flex_relief='Open touch-FPC seat notch and chamfer-roof LCD pocket; complete FPC geometry retained',
+P.update(flex_relief='Both touch and LCD FPC notches open through the screen face; complete FPC geometry retained',
          speaker_plug_pocket=[12,PLUG_POCKET_HEIGHT,2.6],speaker_plug_xy=list(BOARD_PLUG_XY),
          speaker_plug_pocket_limit_y=49.95-PLUG_WALL_LAND,
          speaker_plug_wall_land=PLUG_WALL_LAND,speaker_plug_allowance=list(PLUG_ALLOWANCE),
          speaker_wire_channel_width=CHANNEL_WIDTH,speaker_wire_channel_depth=2.5,
-         physical_status='Prototype feedback received; corrections awaiting recheck')
+         physical_status='Glass fit confirmed by physical prototype; open LCD FPC entry awaits recheck')
 P['interface']=SPEC.copy()
 P['stand_hook_y']=-28.0
 P['stand_hook_head_width']=8.0
@@ -101,7 +101,7 @@ report={'revision':'current','parameters':P,'parts':{},
                  'Speaker slides down. Screen moves down onto the reversed base slots.',
                  'Three printed pieces; stand and flat plinth form one solid.',
                  'Complete lower mounting apertures are covered by integral pads.',
-                 'Prototype feedback identified opening, FPC and hook-play issues; current corrections require a physical recheck.']}
+                 'Physical prototype confirms glass fit; the open LCD FPC entry and other corrected features require a physical recheck.']}
 for name,shape in parts.items():
     print('Export',name,flush=True)
     assert shape.isValid() and len(shape.Solids())==1,(name,len(shape.Solids()))

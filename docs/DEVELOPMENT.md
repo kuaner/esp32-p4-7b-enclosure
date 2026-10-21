@@ -34,7 +34,7 @@ python cad/verify_design.py
 
 也可用 `python cad/analyze_board.py /path/to/reference.stp` 指定相同文件。缓存位于 `design/reference/`，不进入 Git 或发布包。`fit_reference.py` 只应用整体坐标平移，完整保留玻璃、LCD、PCB、元件及两根 FPC，不再局部排除排线。`screen_geometry.py` 按 STEP 的两级玻璃轮廓定义前口，并在原排线位置定义两个局部避让；真实排线应力和任意折叠形状仍未仿真。
 
-当前实物反馈要求长边保持不动，短边按较小 STEP 数据收紧。不能只修改玻璃外包尺寸而忽略其 0.25 mm 前沿与后部的不同轮廓。挂钩需检查四组真实接头的双向轴向自由行程，不能仅以远距离拉脱阻挡作为松紧判据。板端插头本体不在原厂模型中，`wire_route.py` 中的 10 × 6.5 × 5.5 mm 插头包络属于待实测预留值；PH 参考外形来源见打印说明，不能当作用户插头的实测值。凹位距内壁必须保留 1.5 mm 实心边。
+当前实物反馈已确认屏幕尺寸合适，长短边及台阶配合尺寸保持不动。触摸和 LCD 缺口都必须开到屏幕面；LCD 原有斜顶虽能避开原厂静态排线，却阻挡真实装入，因此禁止恢复该斜顶。`verify_design.py` 使用独立的前端通路包络检查这两个入口，不能只检查最终装配位置。不能只修改玻璃外包尺寸而忽略其 0.25 mm 前沿与后部的不同轮廓。挂钩需检查四组真实接头的双向轴向自由行程，不能仅以远距离拉脱阻挡作为松紧判据。板端插头本体不在原厂模型中，`wire_route.py` 中的 10 × 6.5 × 5.5 mm 插头包络属于待实测预留值；PH 参考外形来源见打印说明，不能当作用户插头的实测值。凹位距内壁必须保留 1.5 mm 实心边。
 
 ## 逐层几何与切片
 
@@ -56,7 +56,9 @@ python cad/check_slice.py
 CAD_CJK_FONT=/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc python cad/render_design.py
 ```
 
-预览直接渲染实际 BREP。正式图片为整体、正面、背面、分解、底座、挂槽遮挡、打印方向和配合细节八张，其余裁切图片为本地中间文件。
+预览直接渲染实际 BREP。正式图片包括整体、正面、背面、分解、底座、挂槽遮挡、打印方向和配合细节八张。安装图解另用 `python cad/render_assembly.py` 生成三张 `assembly_speaker.png`、`assembly_screen.png`、`assembly_mounts.png`，使用同一坐标及已有装配变换，标注接线、斜放屏幕、四颗螺丝和上下排不同挂接方向。喇叭没有独立原厂 3D 模型，图中用明确标注的尺寸占位表示，不将其当作真实振膜或框架模型。
+
+其余裁切和 `assembly_detail_*.png` 为本地中间文件，不进入正式清单。面向 MakerWorld 的图文说明位于 [MAKERWORLD.md](MAKERWORLD.md)，配图使用相对路径，三张安装图可单独上传。
 
 ## 发布流程
 

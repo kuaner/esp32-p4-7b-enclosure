@@ -18,12 +18,13 @@ def glass_envelope(tolerance=.1):
 
 
 def flex_reliefs():
-    # Touch FPC reaches the front lip: its local seat relief must be open-ended.
-    # The LCD loop is deeper and can retain a 45-degree self-supporting roof.
+    # Both FPCs must enter from the open screen face. A roof can clear the
+    # installed vendor pose yet trap the real ribbon during screen insertion.
+    # Extend beyond the glass seat edge so no front lip remains across either entry.
     profiles={
         'touch_fpc':(-74.5,21.,[(-46.9,-.01),(-50.7,-.01),
                                (-50.7,10.8),(-46.9,10.8)]),
-        'lcd_fpc':(-14.8,30.6,[(-46.8,1.6),(-47.3,1.6),(-49.05,3.35),
-                               (-49.05,10.1),(-46.8,10.1)])}
+        'lcd_fpc':(-14.8,30.6,[(-46.8,-.01),(-50.7,-.01),
+                               (-50.7,10.1),(-46.8,10.1)])}
     return {name:(cq.Workplane('YZ',origin=(x,0,0)).polyline(points).close()
                   .extrude(width).val()) for name,(x,width,points) in profiles.items()}

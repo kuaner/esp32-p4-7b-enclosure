@@ -31,11 +31,11 @@
   "method": "0.20 mm horizontal sections; previous-layer footprint; two-ended bridge tests with 0.20 mm bead overlap at anchors; separate from slicer support switch.",
   "limitation": "Geometric audit, not physical filament-flow or strength validation.",
   "model_source_sha256": {
-    "cad/build_design.py": "ff4a9d92b94027087ed77bb712787976dff11eeed549e2a1b8dc0e62d3ce7644",
+    "cad/build_design.py": "1f07ada0d46270021e243360d3b77b0c2522841a4ac1482f8da4e9bb439a7186",
     "cad/interface.py": "e5600ab14a7e4054e31e2ea24d5740398a8e2a6c702355da7edd9663980ff784",
-    "cad/parameters.json": "eb28a9bde4e3ce76d75e46e793187e39c9be190974ef4fd9d3b6194bcc6b8b6f",
+    "cad/parameters.json": "e9208cc0697182a03685824c50dba65bcc628ce1263f389b471a92cd987e7a8c",
     "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
-    "cad/screen_geometry.py": "6973b97aa3abb066b859e5c22023ea98b822cde69f7dbbd025c6a11b7f49d4d7",
+    "cad/screen_geometry.py": "8569e7e0a9e27bfbda67d0ceca7efa9f16c93a716ad9d239556ba898263cce91",
     "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de",
     "cad/wire_route.py": "ed2fd86c470e4966307f7a37fcda6b1ecba843840982820bb38b80915d7da800"
   },

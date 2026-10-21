@@ -8,10 +8,12 @@ V=OUT/'verification'
 read=lambda name:json.loads((V/name).read_text())
 manifest=read('release_sha256.json')
 required={'README.md','LICENSE','AGENTS.md','CONTRIBUTING.md','THIRD_PARTY_NOTICES.md',
-          'docs/DEVELOPMENT.md','.github/workflows/cad.yml','.github/workflows/release.yml',
+          'docs/DEVELOPMENT.md','docs/MAKERWORLD.md','.github/workflows/cad.yml','.github/workflows/release.yml',
           'output/current/README.md'}
 required.update(str(p.relative_to(ROOT)) for p in (ROOT/'cad').iterdir()
                 if p.suffix in ['.py','.json'] or p.name=='requirements.txt')
+required.update(f'output/current/previews/assembly_{name}.png'
+                for name in ['speaker','screen','mounts'])
 assert required<=manifest.keys(), 'Missing documentation or source in release manifest'
 for name,digest in manifest.items():
     path=PurePosixPath(name)
@@ -30,8 +32,9 @@ layer=read('support_free_geometry.json');sliced=read('slice_validation.json')
 assert set(build['parts'])==set(parts) and all(
     p['valid_CAD'] and p['watertight'] and p['solids']==1 and abs(p['z_min'])<.001
     for p in build['parts'].values())
-assert len(fit['checks'])==92 and all(p['pass'] for p in fit['checks'].values())
+assert len(fit['checks'])==94 and all(p['pass'] for p in fit['checks'].values())
 for name in ['complete_touch_fpc_and_glass_vs_case','complete_lcd_fpc_and_metal_vs_case',
+             'touch_fpc_front_entry_open','lcd_fpc_front_entry_open',
              'board_speaker_plug_allowance','board_speaker_wire_channel',
              'speaker_joint_-62.5_axial_play','speaker_joint_62.5_axial_play',
              'pedestal_joint_-62.5_axial_play','pedestal_joint_62.5_axial_play',
@@ -48,4 +51,4 @@ for report in [build,fit,layer]:
         for name,digest in report[field].items():assert manifest[name]==digest, name
 expected=json.loads((ROOT/'cad/vendor_reference.json').read_text())
 assert fit['vendor_sha256']==expected['sha256']
-print(f'RELEASE_VERIFIED: {len(manifest)} files, 3 parts, 92 fit checks, 2 layer audits, 3 slices')
+print(f'RELEASE_VERIFIED: {len(manifest)} files, 3 parts, 94 fit checks, 2 layer audits, 3 slices')
