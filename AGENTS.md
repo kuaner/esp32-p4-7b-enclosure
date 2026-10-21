@@ -65,3 +65,5 @@ Original code, models and documentation use MIT. Follow `THIRD_PARTY_NOTICES.md`
 Use relative repository links. Keep download links, archive contents and hashes consistent. Publication and messaging actions require the user's authorization; this file grants no standing permission to publish future changes.
 
 Release filenames are `shell`, `speaker` and `stand` in STL/STEP, plus `assembly.step`, `expansion_adapter.step` and `SHA256SUMS.txt`. Do not add DLC/numeric part prefixes or a custom ZIP. Every pushed tag triggers model construction and publication; the Release title is exactly the tag name.
+
+CI compares rebuilt STL oriented facets with the committed meshes (bijective vertices, unchanged topology, maximum 0.00002 mm numeric deviation). Release STL must retain the exact committed bytes used for slice evidence; STEP comes from the successful rebuild.

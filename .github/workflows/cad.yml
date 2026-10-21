@@ -48,20 +48,22 @@ jobs:
       - name: Compile source
         run: python -m compileall -q cad
       - name: Build three printable solids
+        id: models
         run: python cad/build_design.py
       - name: Verify rebuilt STL matches checked geometry
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import hashlib,json
-          report=json.loads(Path('output/current/verification/slice_validation.json').read_text())
-          for name,part in report['parts'].items():
-              path=Path('output/current/STL')/f'{name}.stl'
-              assert hashlib.sha256(path.read_bytes()).hexdigest()==part['input_sha256'], name
-          print('Rebuilt STL matches the checked inputs')
-          PY
+        run: python cad/check_rebuild.py
       - name: Audit speaker and stand layer geometry
         run: python cad/check_printability.py
+      - name: Keep rebuilt models for failed-check diagnosis
+        if: failure() && steps.models.outcome == 'success'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rebuild-diagnostic
+          path: output/current/STL/*.stl
+          retention-days: 1
+      - name: Preserve exact sliced STL inputs for publication
+        if: inputs.export_models
+        run: git restore -- output/current/STL
       - name: Upload rebuilt models
         if: inputs.export_models
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
