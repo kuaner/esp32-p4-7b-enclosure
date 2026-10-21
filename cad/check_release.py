@@ -30,7 +30,12 @@ layer=read('support_free_geometry.json');sliced=read('slice_validation.json')
 assert set(build['parts'])==set(parts) and all(
     p['valid_CAD'] and p['watertight'] and p['solids']==1 and abs(p['z_min'])<.001
     for p in build['parts'].values())
-assert len(fit['checks'])==78 and all(p['pass'] for p in fit['checks'].values())
+assert len(fit['checks'])==91 and all(p['pass'] for p in fit['checks'].values())
+for name in ['complete_touch_fpc_and_glass_vs_case','complete_lcd_fpc_and_metal_vs_case',
+             'board_speaker_plug_allowance','board_speaker_wire_channel',
+             'speaker_joint_-62.5_axial_play','speaker_joint_62.5_axial_play',
+             'pedestal_joint_-62.5_axial_play','pedestal_joint_62.5_axial_play']:
+    assert fit['checks'][name]['pass'],name
 assert set(layer['parts'])==set(parts[1:]) and all(p['pass'] for p in layer['parts'].values())
 assert set(sliced['parts'])==set(parts) and not sliced['support_enabled']
 for name,p in sliced['parts'].items():
@@ -42,4 +47,4 @@ for report in [build,fit,layer]:
         for name,digest in report[field].items():assert manifest[name]==digest, name
 expected=json.loads((ROOT/'cad/vendor_reference.json').read_text())
 assert fit['vendor_sha256']==expected['sha256']
-print(f'RELEASE_VERIFIED: {len(manifest)} files, 3 parts, 78 fit checks, 2 layer audits, 3 slices')
+print(f'RELEASE_VERIFIED: {len(manifest)} files, 3 parts, 91 fit checks, 2 layer audits, 3 slices')

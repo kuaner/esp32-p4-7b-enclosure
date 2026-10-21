@@ -5,6 +5,41 @@ The moving end follows the speaker box; the case feed-through stays fixed.
 """
 import math
 import cadquery as cq
+from primitives import rr,box
+
+BOARD_PLUG_XY=(-48.5,44.935)
+BOARD_WIRE_Z=19.2
+CHANNEL_WIDTH=3.8
+CHANNEL_TOP_Z=20.9
+
+
+def board_plug_recess():
+    return rr(12,12,2,18.3,2.7,*BOARD_PLUG_XY)
+
+
+def board_wire_channel():
+    a=BOARD_PLUG_XY;b=(0.,14.)
+    dx,dy=b[0]-a[0],b[1]-a[1];length=math.hypot(dx,dy)
+    bar=box(length,CHANNEL_WIDTH,2.6,z=18.3).rotate(
+        (0,0,0),(0,0,1),math.degrees(math.atan2(dy,dx))).translate(
+        ((a[0]+b[0])/2,(a[1]+b[1])/2,0))
+    for x,y in [a,b]:
+        bar=bar.fuse(cq.Solid.makeCylinder(CHANNEL_WIDTH/2,2.6,cq.Vector(x,y,18.3)))
+    return bar.clean()
+
+
+def board_plug_envelope():
+    # The mating housing is not in the vendor STEP; this is a documented allowance.
+    return rr(10,10,1,15.,5.5,*BOARD_PLUG_XY)
+
+
+def board_wire_envelope(radius=1.5):
+    points=[(*BOARD_PLUG_XY,BOARD_WIRE_Z),(0,14,BOARD_WIRE_Z),(0,14,23.0)]
+    parts=[cq.Solid.makeSphere(radius,cq.Vector(*p),angleDegrees1=-90,angleDegrees2=90) for p in points]
+    for a,b in zip(points,points[1:]):
+        v=cq.Vector(*b)-cq.Vector(*a)
+        parts.append(cq.Solid.makeCylinder(radius,v.Length,cq.Vector(*a),v.normalized()))
+    return cq.Compound.makeCompound(parts)
 
 def wire_envelope(dy=0.0,dz=0.0,radius=1.5):
     points=[(-51.8,10+dy,47.6+dz),(-51.8,10+dy,26.8+dz)]

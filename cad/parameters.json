@@ -1,17 +1,17 @@
 {
   "width": 171.0,
-  "height": 106.34,
+  "height": 105.17,
   "enclosure_y": 0.5,
   "depth": 22.0,
   "outer_radius": 5.0,
   "rear_floor": 3.6,
   "pocket_width": 165.08,
-  "pocket_height": 100.34,
+  "pocket_height": 99.17,
   "pocket_y": 0.5,
   "drawing_glass_width": 164.28,
   "drawing_glass_height": 99.74,
   "glass_clearance_x_each": 0.4,
-  "glass_clearance_y_each": 0.3,
+  "glass_clearance_y_each": 0.2,
   "glass_step_z": 1.9,
   "core_width": 164.88,
   "core_height": 97.9,
@@ -103,8 +103,42 @@
       8.0
     ],
     "case_back_z": 22.0,
-    "face_z": 22.2
+    "case_inner_z": 18.4,
+    "face_z": 22.2,
+    "axial_play_target": 0.25,
+    "head_slope_depth": 2.4,
+    "head_width": 8.0,
+    "head_top_z": 18.72894736842105,
+    "head_tip_z": 16.32894736842105,
+    "effective_capture_depth": 3.8500000000000014,
+    "stem_depth": 3.871052631578948
   },
   "speaker_hook_head_width": 8.0,
-  "stand_hook_head_width": 8.0
+  "stand_hook_head_width": 8.0,
+  "glass_front_outline": [
+    164.28,
+    99.17,
+    0.25
+  ],
+  "glass_rear_outline": [
+    163.88,
+    98.77,
+    1.65
+  ],
+  "front_mouth_height": 99.77,
+  "front_lip_pocket_height": 99.57,
+  "screen_reference_basis": "STEP glass profiles; local FPC loops retained",
+  "flex_relief": "Open touch-FPC seat notch and chamfer-roof LCD pocket; complete FPC geometry retained",
+  "speaker_plug_pocket": [
+    12,
+    12,
+    2.6
+  ],
+  "speaker_plug_xy": [
+    -48.5,
+    44.935
+  ],
+  "speaker_wire_channel_width": 3.8,
+  "speaker_wire_channel_depth": 2.5,
+  "physical_status": "Prototype feedback received; corrections awaiting recheck"
 }

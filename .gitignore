@@ -33,5 +33,6 @@ __pycache__/
 !/output/current/previews/stand.png
 !/output/current/previews/mounts.png
 !/output/current/previews/print_orientation.png
+!/output/current/previews/fit_details.png
 /output/current/verification/*
 !/output/current/verification/*.json

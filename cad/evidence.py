@@ -4,7 +4,7 @@ import hashlib
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_SOURCES = ('build_design.py', 'stand.py', 'interface.py', 'primitives.py',
-                 'parameters.json')
+                 'parameters.json', 'screen_geometry.py', 'wire_route.py')
 
 
 def hashes(paths):

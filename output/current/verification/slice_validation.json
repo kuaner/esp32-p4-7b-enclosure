@@ -13,36 +13,36 @@
   ],
   "parts": {
     "01_DLC_shell": {
-      "input_sha256": "76e125bee3c0c8f49ee83660acb7a4526f008193356f83219560a2c2d3322dd8",
+      "input_sha256": "f786dcd9b99e2f0978b8bd01dbc72b0a5603c1df218a825a9c1d1607d0e27401",
       "return_code": 0,
       "layers": 110,
       "support_toolpath_seconds": 0,
       "warning": "",
-      "estimated_seconds": 20098,
-      "estimated_filament_g": 77.29,
-      "bridge_toolpath_seconds": 1415.2,
+      "estimated_seconds": 19322,
+      "estimated_filament_g": 75.8,
+      "bridge_toolpath_seconds": 1357.6,
       "pass": true
     },
     "02_DLC_speaker": {
-      "input_sha256": "5f0c492df8ab43e44ab776b0377637f862b02acd5478a240080f091e5f3379e6",
+      "input_sha256": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
       "return_code": 0,
-      "layers": 181,
+      "layers": 178,
       "support_toolpath_seconds": 0,
       "warning": "",
-      "estimated_seconds": 16780,
-      "estimated_filament_g": 54.64,
-      "bridge_toolpath_seconds": 388.4,
+      "estimated_seconds": 16749,
+      "estimated_filament_g": 54.59,
+      "bridge_toolpath_seconds": 388.7,
       "pass": true
     },
     "03_stand": {
-      "input_sha256": "947c806e8bb5330b8f1079d3576cc57afdfecf47501fec802d6d5347c8ba1f2b",
+      "input_sha256": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a",
       "return_code": 0,
       "layers": 254,
       "support_toolpath_seconds": 0,
       "warning": "",
-      "estimated_seconds": 21343,
-      "estimated_filament_g": 67.22,
-      "bridge_toolpath_seconds": 1470.6,
+      "estimated_seconds": 21338,
+      "estimated_filament_g": 67.21,
+      "bridge_toolpath_seconds": 1470.7,
       "pass": true
     }
   }

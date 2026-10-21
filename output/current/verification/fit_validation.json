@@ -9,7 +9,15 @@
       "pass": true
     },
     "installed_screen_vs_case": {
-      "intersection_mm3": 8.43e-05,
+      "intersection_mm3": 6.48e-05,
+      "pass": true
+    },
+    "complete_touch_fpc_and_glass_vs_case": {
+      "intersection_mm3": 6.48e-05,
+      "pass": true
+    },
+    "complete_lcd_fpc_and_metal_vs_case": {
+      "intersection_mm3": 0.0,
       "pass": true
     },
     "speaker_vs_screen": {
@@ -97,11 +105,27 @@
       "pass": true
     },
     "speaker_gravity_seat_blocks_0p3mm": {
-      "blocking_mm3": 2.4768915,
+      "blocking_mm3": 2.5347834,
       "pass": true
     },
     "speaker_wide_heads_prevent_normal_pullout": {
-      "blocking_mm3": 1.2240132,
+      "blocking_mm3": 10.7171875,
+      "pass": true
+    },
+    "speaker_joint_-62.5_axial_play": {
+      "outward_mm": 0.0503,
+      "inward_mm": 0.2,
+      "total_mm": 0.2502,
+      "target_mm": 0.25,
+      "intersection_threshold_mm3": 1e-06,
+      "pass": true
+    },
+    "speaker_joint_62.5_axial_play": {
+      "outward_mm": 0.0503,
+      "inward_mm": 0.2,
+      "total_mm": 0.2502,
+      "target_mm": 0.25,
+      "intersection_threshold_mm3": 1e-06,
       "pass": true
     },
     "pedestal_entry_normal_6": {
@@ -177,11 +201,27 @@
       "pass": true
     },
     "pedestal_gravity_seat_blocks_0p3mm": {
-      "blocking_mm3": 2.4768915,
+      "blocking_mm3": 2.4835354,
       "pass": true
     },
     "pedestal_wide_heads_prevent_normal_pullout": {
-      "blocking_mm3": 0.7463022,
+      "blocking_mm3": 6.7442868,
+      "pass": true
+    },
+    "pedestal_joint_-62.5_axial_play": {
+      "outward_mm": 0.0503,
+      "inward_mm": 0.2,
+      "total_mm": 0.2502,
+      "target_mm": 0.25,
+      "intersection_threshold_mm3": 1e-06,
+      "pass": true
+    },
+    "pedestal_joint_62.5_axial_play": {
+      "outward_mm": 0.0503,
+      "inward_mm": 0.2,
+      "total_mm": 0.2502,
+      "target_mm": 0.25,
+      "intersection_threshold_mm3": 1e-06,
       "pass": true
     },
     "mic_-68_clear_case": {
@@ -248,6 +288,26 @@
       "intersection_mm3": 0.0,
       "pass": true
     },
+    "board_speaker_plug_allowance": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "board_speaker_wire_channel": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "board_speaker_wire_vs_electronics": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "plug_recess_preserves_outer_skin": {
+      "missing_mm3": 0.0,
+      "pass": true
+    },
+    "channel_recess_preserves_outer_skin": {
+      "missing_mm3": 0.0,
+      "pass": true
+    },
     "TF_card_path": {
       "intersection_mm3": 0.0,
       "pass": true
@@ -289,10 +349,18 @@
       "pass": true
     },
     "max_lens_insertion_1": {
-      "intersection_mm3": 1.89e-05,
+      "intersection_mm3": 0.0,
       "pass": true
     },
     "max_lens_insertion_0": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "glass_short_edge_allowance_-0.1": {
+      "intersection_mm3": 0.0,
+      "pass": true
+    },
+    "glass_short_edge_allowance_0.1": {
       "intersection_mm3": 0.0,
       "pass": true
     },
@@ -316,10 +384,10 @@
   "notes": {
     "revision": "current",
     "screen_reference": {
-      "basis": "User confirmed the assembled screen edge is flat; no outward flex clearance is needed.",
-      "unchanged": "All rigid glass/LCD/PCB parts, original mounts and electronic components.",
-      "flex_only_exclusion": "Parts 1337/1338: Y < -47.55, Z > 1.90001, X [-74,-54] / [-15,16]. Part 1337 also Y < -49.085, X [-74,-54].",
-      "limitation": "Outward flex bends are excluded from rigid-fit checks; folded cable shape is not simulated.",
+      "basis": "Prototype feedback: smaller STEP glass profiles and two local FPC reliefs are required.",
+      "unchanged": "All original components and complete FPC loops retained; no geometry exclusions.",
+      "flex_only_exclusion": null,
+      "limitation": "Vendor FPC pose is checked, not cable strain or arbitrary folded routes.",
       "drawing_glass_nominal_mm": [
         164.28,
         99.74,
@@ -329,9 +397,13 @@
         164.28,
         99.17
       ],
+      "step_glass_rear_outline_mm": [
+        163.88,
+        98.77
+      ],
       "glass_centre_y_mm": 0.5
     },
-    "screen_case_candidate_count": 12,
+    "screen_case_candidate_count": 13,
     "total_screen_components": 1339,
     "candidate_culling": "Only AABBs wholly in guaranteed empty core X +/-82.44,Y[-47.95,49.95],Z(1.9,14.79) excluded.",
     "mechanical_only": "DLC-20 is a project mechanical interface, not an electrical standard.",
@@ -339,24 +411,28 @@
     "camera": "22 x 4 mm top-centre ribbon exit; no camera mount.",
     "printing": "Support disabled; geometry-audited continuous growth and short two-ended bridges.",
     "limitations": "Discrete positions, not continuous sweep, strength or fatigue simulation. No anti-lift retention is intended.",
-    "physical_fit": "Current design is for CAD review; not physically prototyped."
+    "physical_fit": "Prototype feedback received; these corrected dimensions await another physical check.",
+    "hook_clearance": "Real local joints checked in both normal directions; target total free travel 0.25 mm.",
+    "speaker_plug": "Board-side PH2.0 H7 position from vendor model. Mating plug allowance is assumed 10 x 10 x 5.5 mm, not a measured mating-part model."
   },
   "model_source_sha256": {
-    "cad/build_design.py": "c66aa583b4fd8b99d47cedd315bc4693629378bcc61d0f9ae02dcc3d303688de",
-    "cad/interface.py": "7a1c01096c77133baffe5c95fbe01a6d8ca48366ca2e5b3a344e71782e67299b",
-    "cad/parameters.json": "cf239a0cc1a5b17b211f1216816c4c38dfc861ed2f8e3863982f1016e91d8555",
+    "cad/build_design.py": "e395b14e37ec088f3203f564991bf9c501d00ed1491c46e338709201f2cd742a",
+    "cad/interface.py": "e52b4bec2f1df0c2ca4cc689f8a27afed943149bc3118fcfc34d14df37291f05",
+    "cad/parameters.json": "8326c4afccb14006b7d9ffc67892f4435338433f91af396cfb625aaec5f13a1c",
     "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
-    "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de"
+    "cad/screen_geometry.py": "6973b97aa3abb066b859e5c22023ea98b822cde69f7dbbd025c6a11b7f49d4d7",
+    "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de",
+    "cad/wire_route.py": "581bf432bc3bcf3bbb84c82a54823a9b4a19cfe5df4e06d76b9b4af4d36ab048"
   },
   "stl_sha256": {
-    "output/current/STL/01_DLC_shell.stl": "76e125bee3c0c8f49ee83660acb7a4526f008193356f83219560a2c2d3322dd8",
-    "output/current/STL/02_DLC_speaker.stl": "5f0c492df8ab43e44ab776b0377637f862b02acd5478a240080f091e5f3379e6",
-    "output/current/STL/03_stand.stl": "947c806e8bb5330b8f1079d3576cc57afdfecf47501fec802d6d5347c8ba1f2b"
+    "output/current/STL/01_DLC_shell.stl": "f786dcd9b99e2f0978b8bd01dbc72b0a5603c1df218a825a9c1d1607d0e27401",
+    "output/current/STL/02_DLC_speaker.stl": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
+    "output/current/STL/03_stand.stl": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a"
   },
   "brep_sha256": {
-    "output/current/verification/01_DLC_shell.brep": "1d0f301d7a68fa3b73bc15b28c197a8dd0b116e5017e8171432e7c54dabdc5ac",
-    "output/current/verification/02_DLC_speaker.brep": "0ba86cc994756e87ce5ee0fae20b861082966ba857aa7fc1d030bc2f39131a00",
-    "output/current/verification/03_stand.brep": "bf20de26ae086140793fae7d186c955854c20f4f8360f94fae00eaed4a98a19c",
+    "output/current/verification/01_DLC_shell.brep": "aeddd5cd4204af2b963f0649beafed878d47b5b135ba580cf0b410849df27219",
+    "output/current/verification/02_DLC_speaker.brep": "84c05acc4336897c3c49adb89143af514b7c8629eedf425bdfc6df55e932c3e6",
+    "output/current/verification/03_stand.brep": "fba9d737d22f29b882da42bf33917597c8fa11dc6a239bd06aca41bad10feb36",
     "output/current/verification/speaker_clips.brep": "77451d7af0c98b9e4c8b0aade891d99c1780199497cd9ed29b771c181eadf0b4"
   },
   "vendor_sha256": "f2104dc257ee8575459ddf74404e32faf81e4bcda23a8bfec23b6604c089986c"

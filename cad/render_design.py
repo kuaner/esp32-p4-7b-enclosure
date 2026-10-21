@@ -6,7 +6,7 @@ from PIL import Image,ImageDraw,ImageFont
 from render_cad import render
 from primitives import box
 from stand import to_print
-from fit_reference import assembled_screen_component
+from fit_reference import assembled_screen_component,component
 
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'output/current';DEST=OUT/'previews'
 read=lambda n:cq.Shape.importBrep(str(OUT/'verification'/f'{n}.brep'))
@@ -63,7 +63,7 @@ for i,shape in enumerate(shapes):
     im.paste(Image.open(path),(700*i,180))
     d.text((700*i+25,130),['主壳：背面贴床','喇叭盒：网孔底贴床','底座：平整底盘贴床'][i],font=font(28),fill=INK)
 d.text((45,940),'菱形立架与底盘连成一个实体，不拆件；侧面接口与相机开口仍包含桥接。',font=font(28),fill=INK)
-d.text((45,995),'已做 CAD 和参考切片检查，尚未实物打样；当前先审阅造型与装配关系。',font=font(27),fill=MUTED)
+d.text((45,995),'依据实物反馈修正；已做 CAD 与参考切片检查，修正后的配合仍待实物复测。',font=font(27),fill=MUTED)
 im.save(DEST/'print_orientation.png')
 
 im=Image.new('RGB',(2000,1500),BG);d=ImageDraw.Draw(im)
@@ -77,6 +77,49 @@ for i,(name,label) in enumerate([('stand.png','底座 · 菱形镂空，平整�
     pic=Image.open(DEST/name).convert('RGB');pic.thumbnail((950,510))
     im.paste(pic,(x+(950-pic.width)//2,y+(510-pic.height)//2))
     d.text((x+18,y+527),label,font=font(27),fill=INK)
-d.text((45,1440),'实际 CAD 渲染；当前为设计审阅，尚未实物打样。',font=font(27),fill=MUTED)
+d.text((45,1440),'实际 CAD 渲染；依据实物反馈修正，当前配合待复测。',font=font(27),fill=MUTED)
 im.save(DEST/'overview.png')
+
+print('Prototype corrections: actual sections and internal routing',flush=True)
+detail_specs=[]
+screen_crop=box(1.2,12,8,50,-49,-.5)
+detail_specs.append(('edge',[(body.intersect(screen_crop),GRAY),
+    (component(1337).intersect(screen_crop),(.10,.17,.19)),
+    (component(1338).intersect(screen_crop),(.68,.72,.73))],
+    dict(camera=(-150,-65,7),focus=(50,-49,2.5),up=(0,0,1),scale=6)))
+fpc_crop=box(115,14,12.5,-26,-47.5,0)
+touch_loop=component(1337).intersect(box(23,3.7,11,-64,-50.95,.251))
+lcd_loop=component(1338).intersect(box(31,3.4,8,.5,-48.5,2.2))
+detail_specs.append(('fpc',[(body.intersect(fpc_crop),GRAY),
+    (touch_loop,(.86,.48,.15)),(lcd_loop,(.86,.48,.15))],
+    dict(camera=(-115,35,-90),focus=(-26,-47,4),up=(0,0,1),scale=36)))
+joint_crop=box(16,1.5,14,-62.5,20,14)
+detail_specs.append(('hook',[(body.intersect(joint_crop),GRAY),
+    (pod.intersect(joint_crop),(.83,.46,.15))],
+    dict(camera=(-62.5,-150,20),focus=(-62.5,20,20),up=(0,0,1),scale=8)))
+route_crop=box(75,48,10,-24,30,15.5)
+route_detail=body.intersect(route_crop)
+floor_faces=[];other_faces=[]
+for face in route_detail.Faces():
+    b=face.BoundingBox()
+    is_floor=any(abs(b.zmin-z)<1e-5 and abs(b.zmax-z)<1e-5 for z in [20.9,21.0])
+    (floor_faces if is_floor else other_faces).append(face)
+detail_specs.append(('route',[(cq.Compound.makeCompound(other_faces),GRAY),
+    (cq.Compound.makeCompound(floor_faces),(.86,.48,.15))],
+    dict(camera=(-90,95,-160),focus=(-24,30,20),up=(0,1,0),scale=35)))
+im=Image.new('RGB',(2000,1520),BG);d=ImageDraw.Draw(im)
+d.text((45,24),'实物反馈修正 · 实际 CAD 剖面与内侧结构',font=font(42),fill=INK)
+labels=[('屏幕短边 · 前后两级玻璃轮廓','玻璃前沿 99.17 mm，后部 98.77 mm；长边保持原尺寸。'),
+        ('局部排线避让 · 保留完整原厂 FPC','触摸排线根部开台阶缺口；LCD 排线设局部斜顶凹位。'),
+        ('挂钩夹持 · 名义总余量 0.25 mm','橙色为真实喇叭挂钩剖面；底座同步采用较短夹持段。'),
+        ('喇叭插头凹位 + 内侧走线槽','橙色为真实凹位和槽底；12×12 mm 凹位接 3.8 mm 槽。')]
+for i,(name,its,kwargs) in enumerate(detail_specs):
+    path=DEST/f'detail_{name}.png'
+    render(its,path,size=(940,500),**kwargs)
+    x=25+i%2*1000;y=115+i//2*650
+    im.paste(Image.open(path),(x,y))
+    d.text((x+18,y+515),labels[i][0],font=font(29),fill=INK)
+    d.text((x+18,y+566),labels[i][1],font=font(23),fill=MUTED)
+d.text((45,1455),'已完成几何与参考切片检查；插头配合和修正后的松紧仍需实物复测。',font=font(27),fill=MUTED)
+im.save(DEST/'fit_details.png')
 print('REVIEW_IMAGES_READY',flush=True)

@@ -5,7 +5,7 @@
       "file": "02_DLC_speaker.stl",
       "layer_height_mm": 0.2,
       "self_support_allowance_mm": 0.28,
-      "layers_checked": 181,
+      "layers_checked": 178,
       "bridge_limit_mm": 4.5,
       "maximum_gap_from_previous_mm": 0,
       "maximum_two_end_bridge_mm": 0,
@@ -31,14 +31,16 @@
   "method": "0.20 mm horizontal sections; previous-layer footprint; two-ended bridge tests with 0.20 mm bead overlap at anchors; separate from slicer support switch.",
   "limitation": "Geometric audit, not physical filament-flow or strength validation.",
   "model_source_sha256": {
-    "cad/build_design.py": "c66aa583b4fd8b99d47cedd315bc4693629378bcc61d0f9ae02dcc3d303688de",
-    "cad/interface.py": "7a1c01096c77133baffe5c95fbe01a6d8ca48366ca2e5b3a344e71782e67299b",
-    "cad/parameters.json": "cf239a0cc1a5b17b211f1216816c4c38dfc861ed2f8e3863982f1016e91d8555",
+    "cad/build_design.py": "e395b14e37ec088f3203f564991bf9c501d00ed1491c46e338709201f2cd742a",
+    "cad/interface.py": "e52b4bec2f1df0c2ca4cc689f8a27afed943149bc3118fcfc34d14df37291f05",
+    "cad/parameters.json": "8326c4afccb14006b7d9ffc67892f4435338433f91af396cfb625aaec5f13a1c",
     "cad/primitives.py": "d62573624e6a37a3c90abce3d47e9c9f9887cc750b8377e01e408c0d8a653f23",
-    "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de"
+    "cad/screen_geometry.py": "6973b97aa3abb066b859e5c22023ea98b822cde69f7dbbd025c6a11b7f49d4d7",
+    "cad/stand.py": "1c174f0659bb87f7c514f8fd133ddd476af83110c9b93f1cda520a8c932e44de",
+    "cad/wire_route.py": "581bf432bc3bcf3bbb84c82a54823a9b4a19cfe5df4e06d76b9b4af4d36ab048"
   },
   "stl_sha256": {
-    "output/current/STL/02_DLC_speaker.stl": "5f0c492df8ab43e44ab776b0377637f862b02acd5478a240080f091e5f3379e6",
-    "output/current/STL/03_stand.stl": "947c806e8bb5330b8f1079d3576cc57afdfecf47501fec802d6d5347c8ba1f2b"
+    "output/current/STL/02_DLC_speaker.stl": "47ea2dd7a604cd089d5bf3db1aa4396a6084868626c3585d5b9bf3640067d0aa",
+    "output/current/STL/03_stand.stl": "5e053fc297e41c14783a9c7204b28b54937a0a96c5eaa810f3f4a466d6859a6a"
   }
 }

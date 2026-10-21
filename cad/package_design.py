@@ -12,7 +12,7 @@ pr=read('print_validation.json');fit=read('fit_validation.json')
 layer=read('support_free_geometry.json');sliced=read('slice_validation.json')
 assert pr['revision']==fit['notes']['revision']==layer['revision']==sliced['revision']=='current'
 assert len(pr['parts'])==3 and all(v['valid_CAD'] and v['watertight'] and v['solids']==1 for v in pr['parts'].values())
-assert len(fit['checks'])==78 and all(v['pass'] for v in fit['checks'].values())
+assert len(fit['checks'])==91 and all(v['pass'] for v in fit['checks'].values())
 assert len(layer['parts'])==2 and all(v['pass'] for v in layer['parts'].values())
 assert len(sliced['parts'])==3 and all(v['pass'] for v in sliced['parts'].values())
 for report in [pr,fit,layer]:
@@ -38,7 +38,7 @@ add(OUT/'README.md')
 for folder,ext in [('STL','*.stl'),('STEP','*.step'),('verification','*.json')]:
     for p in sorted((OUT/folder).glob(ext)):
         if p.name!='release_sha256.json':add(p)
-for name in ['overview','front','rear','exploded','stand','mounts','print_orientation']:
+for name in ['overview','front','rear','exploded','stand','mounts','print_orientation','fit_details']:
     add(OUT/'previews'/f'{name}.png')
 for pattern in ['*.py','*.json','requirements.txt']:
     for p in sorted((ROOT/'cad').glob(pattern)):add(p)

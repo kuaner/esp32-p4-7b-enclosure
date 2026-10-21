@@ -5,7 +5,8 @@ import cadquery as cq
 from fit_reference import assembled_screen_component,reference_notes
 from primitives import box,rr
 from interface import SPEC,receiver,flat_adapter as tile
-from wire_route import wire_envelope
+from wire_route import wire_envelope,board_wire_envelope,board_plug_envelope,BOARD_PLUG_XY
+from screen_geometry import glass_envelope
 from evidence import hashes,model_sources,stl_inputs
 
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'output/current/verification'
@@ -53,6 +54,8 @@ for component in components:
     if not inside:candidates.append(component)
 print('Exact screen/case candidates',len(candidates),'of',len(components),flush=True)
 check('installed_screen_vs_case',cq.Compound.makeCompound(candidates),body)
+check('complete_touch_fpc_and_glass_vs_case',components[1337],body)
+check('complete_lcd_fpc_and_metal_vs_case',components[1338],body)
 check('speaker_vs_screen',pod,board)
 check('pedestal_vs_screen',stand,board)
 check('pedestal_vs_speaker',stand,pod)
@@ -75,6 +78,27 @@ for name,module,direction in [('speaker',pod,-1),('pedestal',stand,1)]:
     v=module.translate((0,0,1)).intersect(body).Volume()
     checks[f'{name}_wide_heads_prevent_normal_pullout']={'blocking_mm3':round(v,7),'pass':v>.01}
     print(f'{name}_wide_heads_prevent_normal_pullout',checks[f'{name}_wide_heads_prevent_normal_pullout'],flush=True)
+    # Measure both directions using the real local joint, not just a far-away
+    # pull-out obstruction. The previous check alone allowed visibly loose fits.
+    row=20 if name=='speaker' else -28
+    for x in SPEC['columns']:
+        crop=box(24,40,13,x,row,14)
+        local_case=body.intersect(crop);local_module=module.intersect(crop)
+        def free_travel(sign):
+            lo,hi=0.,1.
+            for _ in range(12):
+                mid=(lo+hi)/2
+                v=local_module.translate((0,0,sign*mid)).intersect(local_case).Volume()
+                if v>1e-6:hi=mid
+                else:lo=mid
+            return lo
+        outward=free_travel(1);inward=free_travel(-1)
+        checks[f'{name}_joint_{x}_axial_play']={
+            'outward_mm':round(outward,4),'inward_mm':round(inward,4),
+            'total_mm':round(outward+inward,4),'target_mm':SPEC['axial_play_target'],
+            'intersection_threshold_mm3':1e-6,
+            'pass':outward+inward<=.30}
+        print('Axial play',name,x,checks[f'{name}_joint_{x}_axial_play'],flush=True)
 
 for x in [-68,68]:
     airway=cq.Solid.makeCylinder(1.6,105,cq.Vector(x,-44.9,9.9))
@@ -91,15 +115,23 @@ for dy in [0,4,8]:
     route=wire_envelope(dy).translate((0,4,-.6))
     check(f'wire_{dy}_vs_case',route,body)
     check(f'wire_{dy}_vs_pod',route,pod.translate((0,dy,0)))
+check('board_speaker_plug_allowance',board_plug_envelope(),body)
+check('board_speaker_wire_channel',board_wire_envelope(),body)
+check('board_speaker_wire_vs_electronics',board_wire_envelope(),board)
+# A recessed path must leave a continuous outside skin, rather than an exposed slit.
+for name,x,y,z in [('plug',*BOARD_PLUG_XY,21.05),('channel',-24.25,29.4675,21.0)]:
+    probe=box(4,4,.9,x,y,z);missing=probe.cut(body).Volume()
+    checks[f'{name}_recess_preserves_outer_skin']={'missing_mm3':round(missing,7),'pass':missing<.001}
 check('TF_card_path',box(11.5,18,1.5,2.13,-51,8.85),body)
 # A conservative ribbon-only probe through the requested top opening.
 camera=box(18,15,.4,0,53.67,15.5)
 check('top_camera_ribbon_exit',camera,body)
 for name,shape in [('speaker',pod),('pedestal',stand)]:check(f'camera_exit_vs_{name}',camera,shape)
-# Lens maximum from the larger 2D drawing through the inclined insertion path.
-lens=box(164.38,99.84,1.9,0,.5,0)
+# The STEP's two glass outlines plus 0.1 mm overall manufacturing allowance.
+lens=glass_envelope(.1)
 for angle in [30,20,12,8,5,3,1,0]:
     check(f'max_lens_insertion_{angle}',lens.rotate((82.14,0,0),(82.14,1,0),-angle),body)
+for dy in [-.1,.1]:check(f'glass_short_edge_allowance_{dy}',lens.translate((0,dy,0)),body)
 
 # Same hook envelope fits either port orientation; no auxiliary fastener.
 for y in SPEC['rows']:
@@ -114,7 +146,9 @@ notes={'revision':'current','screen_reference':reference_notes(),
        'camera':'22 x 4 mm top-centre ribbon exit; no camera mount.',
        'printing':'Support disabled; geometry-audited continuous growth and short two-ended bridges.',
        'limitations':'Discrete positions, not continuous sweep, strength or fatigue simulation. No anti-lift retention is intended.',
-       'physical_fit':'Current design is for CAD review; not physically prototyped.'}
+       'physical_fit':'Prototype feedback received; these corrected dimensions await another physical check.',
+       'hook_clearance':'Real local joints checked in both normal directions; target total free travel 0.25 mm.',
+       'speaker_plug':'Board-side PH2.0 H7 position from vendor model. Mating plug allowance is assumed 10 x 10 x 5.5 mm, not a measured mating-part model.'}
 (OUT/'fit_validation.json').write_text(json.dumps({'checks':checks,'notes':notes,
     'model_source_sha256':model_sources(),'stl_sha256':stl_inputs(),
     'brep_sha256':hashes([OUT/f'{n}.brep' for n in ['01_DLC_shell','02_DLC_speaker','03_stand','speaker_clips']]),

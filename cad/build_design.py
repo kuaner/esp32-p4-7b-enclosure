@@ -11,6 +11,8 @@ from primitives import box,rr
 from interface import SPEC,receiver,hanger,flat_adapter
 from stand import build_stand,to_print,PARAMETERS as STAND_PARAMETERS
 from evidence import model_sources,stl_inputs
+from screen_geometry import SCREEN,flex_reliefs
+from wire_route import board_plug_recess,board_wire_channel,BOARD_PLUG_XY,CHANNEL_WIDTH
 
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'output/current'
 for name in ['STL','STEP','previews','verification']:
@@ -19,6 +21,11 @@ P=json.loads((ROOT/'cad/parameters.json').read_text())
 P.update(revision='current',speaker_front_z=47.0,pod_front_width=145.,pod_rear_width=116.,
          pod_inner=[101.,46.,27.5],pod_radius=6.0,maximum_module_short_bridge=4.5)
 P.update(STAND_PARAMETERS)
+P.update(SCREEN)
+P.update(flex_relief='Open touch-FPC seat notch and chamfer-roof LCD pocket; complete FPC geometry retained',
+         speaker_plug_pocket=[12,12,2.6],speaker_plug_xy=list(BOARD_PLUG_XY),
+         speaker_wire_channel_width=CHANNEL_WIDTH,speaker_wire_channel_depth=2.5,
+         physical_status='Prototype feedback received; corrections awaiting recheck')
 P['interface']=SPEC.copy()
 P['stand_hook_y']=-28.0
 P['stand_hook_head_width']=8.0
@@ -26,10 +33,13 @@ P['speaker_hook_head_width']=8.0
 
 
 print('Screen shell: downward hanging speaker, reversed gravity-seated base',flush=True)
-body=rr(171,106.34,5,0,22,y=.5)
-body=body.cut(box(165.08,100.34,2.9,y=.5,z=-1)).cut(box(164.88,97.9,16.5,y=1,z=1.9))
-lead=(cq.Workplane('XY',origin=(0,.5,-.01)).rect(166.28,101.54)
-      .workplane(offset=.61).rect(165.08,100.34).loft().val());body=body.cut(lead)
+body=rr(P['width'],P['height'],5,0,22,y=.5)
+body=body.cut(box(165.08,P['pocket_height'],2.9,y=.5,z=-1)).cut(box(164.88,97.9,16.5,y=1,z=1.9))
+lead=(cq.Workplane('XY',origin=(0,.5,-.01)).rect(166.28,P['front_mouth_height'])
+      .workplane(offset=.31).rect(165.68,P['front_lip_pocket_height'])
+      .workplane(offset=.30).rect(165.08,P['pocket_height']).loft(ruled=True).val())
+body=body.cut(lead)
+for relief in flex_reliefs().values():body=body.cut(relief)
 for x,y in [(-78,-43.5),(-78,45.50005),(78.00009,-43.5),(78.00009,45.50005)]:
     body=body.fuse(cq.Solid.makeCylinder(4,3.7,cq.Vector(x,y,14.8)))
     body=body.cut(cq.Solid.makeCylinder(1.4,8,cq.Vector(x,y,14.7)))
@@ -45,6 +55,7 @@ for x in [-68,68]:body=body.cut(cq.Solid.makeCylinder(1.6,4.3,cq.Vector(x,-44.9,
 for x in range(-32,33,8):
     for y in [-32,-40]:body=body.cut(rr(4.5,2,.9,18.2,4,x,y))
 body=body.cut(rr(10,7,1.3,18.2,4,0,14))
+body=body.cut(board_plug_recess()).cut(board_wire_channel())
 for y,direction in [(20,-1),(-28,1)]:
     for x in SPEC['columns']:body=body.cut(receiver(x,y,direction))
 body=body.clean()
@@ -86,7 +97,7 @@ report={'revision':'current','parameters':P,'parts':{},
                  'Speaker slides down. Screen moves down onto the reversed base slots.',
                  'Three printed pieces; stand and flat plinth form one solid.',
                  'Complete lower mounting apertures are covered by integral pads.',
-                 'Physical printing has not yet been performed.']}
+                 'Prototype feedback identified opening, FPC and hook-play issues; current corrections require a physical recheck.']}
 for name,shape in parts.items():
     print('Export',name,flush=True)
     assert shape.isValid() and len(shape.Solids())==1,(name,len(shape.Solids()))
