@@ -66,4 +66,4 @@ Use relative repository links. Keep download links, archive contents and hashes 
 
 Release filenames are `shell`, `speaker` and `stand` in STL/STEP, plus `assembly.step`, `expansion_adapter.step` and `SHA256SUMS.txt`. Do not add DLC/numeric part prefixes or a custom ZIP. Every pushed tag triggers model construction and publication; the Release title is exactly the tag name.
 
-CI compares rebuilt STL oriented facets with the committed meshes (bijective vertices, unchanged topology, maximum 0.00002 mm numeric deviation). Release STL must retain the exact committed bytes used for slice evidence; STEP comes from the successful rebuild.
+Open CASCADE triangulation differs across platforms. CI compares all five rebuilt STEP solids with the committed models: equal solid counts, bounds within 0.000001 mm, volume difference and each directional Boolean difference within 0.0001 mm³. Release STL must retain the exact committed bytes used for slice evidence; STEP comes from the successful rebuild.

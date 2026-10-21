@@ -50,7 +50,7 @@ jobs:
       - name: Build three printable solids
         id: models
         run: python cad/build_design.py
-      - name: Verify rebuilt STL matches checked geometry
+      - name: Verify rebuilt CAD matches checked solids
         run: python cad/check_rebuild.py
       - name: Audit speaker and stand layer geometry
         run: python cad/check_printability.py
@@ -59,7 +59,9 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: rebuild-diagnostic
-          path: output/current/STL/*.stl
+          path: |
+            output/current/STL/*.stl
+            output/current/STEP/*.step
           retention-days: 1
       - name: Preserve exact sliced STL inputs for publication
         if: inputs.export_models

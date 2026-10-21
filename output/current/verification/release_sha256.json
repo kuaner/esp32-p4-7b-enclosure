@@ -1,13 +1,13 @@
 {
   "README.md": "baa096b3af73d272117cf82889081916cb70508d84d594ea0f5a9f7812c09dca",
   "LICENSE": "a10f7ab9d0f168d45ec2e6bac24cdac4d44a65532b291e7b395223e566456613",
-  "AGENTS.md": "dd9885ff514edd21e286292a0e6fb18e3c4c333521ba1dd1591763f20b6725b1",
+  "AGENTS.md": "3f3132c83968928f127f7496473ebd8ca0171340cb3d7849487b2340d438137c",
   "CONTRIBUTING.md": "70e6f8fcb9831b2d549fdc63cff28e8ca7cfadab9245c4a65b1d56bee1f4c4b4",
   "THIRD_PARTY_NOTICES.md": "cd54c12f2f04f215dd7fd64eb78e351929a5c344a3fe63ee4152d543c029ebb9",
   ".gitignore": "897cb11d460a036d19949d74c770b11f63e93a962144abcdbf4cf889ed835787",
   ".gitattributes": "167435fb3ae4a648bc4afa3e211a6bcd37a754f37cf0240cc34cd3fd05bad800",
-  "docs/DEVELOPMENT.md": "e34330e71bf224cb806608f35c307c2f9c6529f670626c418b5fcd4d43894805",
-  ".github/workflows/cad.yml": "109c6460539c1611fba306c815c6173b78ef0d4ca87e2a75ad5b5c0abc87d4c2",
+  "docs/DEVELOPMENT.md": "74290cdc0d2f7ad04f3a245a982ac7840ee4c0646b1099e1286fb300d6a5bcc5",
+  ".github/workflows/cad.yml": "9aacae37da2b9b225074733c943750f821d64fc1479c75c1a09e3cc8b1207cf1",
   ".github/workflows/release.yml": "418385b70a8ee6390d1cd1965aa83269c4c6d0813d7515d8facbd2987e286c54",
   "output/current/README.md": "1c7135188ef96bb4ae13230d1f3ca18188bb6aba0c9e33230c86beab0c69b91a",
   "output/current/STL/shell.stl": "a7805cf72a278ed258fc740175f7741da67eaad433cf2126194fe0e799fd308d",
@@ -33,7 +33,7 @@
   "cad/analyze_board.py": "fdc7d375142ceca5563c2b15c122a56f1ad30117e6c41a6d4f1e79073ebefb2e",
   "cad/build_design.py": "c6e527a3d193a6b64d0160796cc26592dbb2607dfd6253cec3a117ccea401e77",
   "cad/check_printability.py": "752cfce2b4b2a259253f82e766a30a9b0b996208578925c6d8ce55f816133ac3",
-  "cad/check_rebuild.py": "1133552b517d980f8316a27d1adde5ee7bcd8cc1f8bdc8b5bc3bea5dd23990f2",
+  "cad/check_rebuild.py": "a340e202cfb17f16d0eb7e252a6a438905026a24d3fb1164abcf50880a366d77",
   "cad/check_release.py": "42693e36d855d2aecedcd9b2c4603f9923779a61610300dcbb270eed5e7aa70f",
   "cad/check_slice.py": "78427ed32f05a931ae821994760cf62f07a9f25c6cd3b24b64c1af13e02096d3",
   "cad/evidence.py": "85165a8062fa348d818d2a645213ea4cbdde3868d5905beaeaf12da72d7f77a3",
@@ -49,5 +49,5 @@
   "cad/wire_route.py": "7c9cecb2222bc83d3eadbc06f6f5bf0c1370f0f7d4348743020bfdc916fa6c70",
   "cad/parameters.json": "f13236c4d46af981b07e1c47d79465424ce42018b1957cd03d24722754491d96",
   "cad/vendor_reference.json": "9d0de1f38d6afcc25e38eaea51218113da91c46e819dc295b3abe02d981e43e9",
-  "cad/requirements.txt": "0b01c696c99515a2d03b7eb03e2da1abfab39dd9bae183e69d85402f17d8ca59"
+  "cad/requirements.txt": "57ea3a846faf0c2505090eb7885d8676748f7952fb5aa655acbaea2c8c2f87b0"
 }

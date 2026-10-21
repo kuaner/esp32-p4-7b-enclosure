@@ -76,7 +76,7 @@ git push origin 20261021
 
 标签名自行选择，不要求日期或固定前缀。Release 标题直接使用 tag 名。也可在 Actions 中手动运行 **Release models**，填写已有 tag 重新构建发布。
 
-CI 先验证提交的文件和证据，再从该 tag 重建 CAD 并做逐层检查。`check_rebuild.py` 对照提交中的 STL，要求顶点一一对应、每个有向三角面及其数量相同，顶点偏差不超过 0.00002 mm，以兼容不同平台的浮点输出。发布的 STL 保留已实际切片的原始字节和哈希；STEP 使用本次重建结果，不将云端的新 STL 冒充为已经切片的输入。发布任务直接上传：
+CI 先验证提交的文件和证据，再从该 tag 重建 CAD 并做逐层检查。不同平台的 Open CASCADE 可能产生不同三角划分，因此 `check_rebuild.py` 直接对照提交中的五个 STEP，要求实体数相同、包围边界偏差不超过 0.000001 mm，双向布尔差和体积差均不超过 0.0001 mm³。发布的 STL 保留已实际切片的原始字节和哈希；STEP 使用本次重建结果，不将云端的新 STL 冒充为已经切片的输入。发布任务直接上传：
 
 - `shell.stl` / `shell.step`：主壳。
 - `speaker.stl` / `speaker.step`：喇叭盒。

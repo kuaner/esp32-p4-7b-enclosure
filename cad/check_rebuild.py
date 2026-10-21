@@ -1,47 +1,51 @@
-"""Compare rebuilt STL facets with the exact committed, sliced model inputs."""
-from collections import Counter
-from io import BytesIO
+"""Compare rebuilt CAD solids against the committed models with slice evidence.
+
+Open CASCADE triangulation can differ by platform. Compare the actual solids,
+then publish the exact committed STL bytes rather than un-sliced new meshes.
+"""
 from pathlib import Path
+from tempfile import TemporaryDirectory
 import json
 import subprocess
 
-import numpy as np
-from scipy.spatial import cKDTree
-import trimesh
+import cadquery as cq
 
 ROOT = Path(__file__).resolve().parents[1]
-# Less than one micron; only accommodates platform floating-point output.
-MAX_VERTEX_ERROR_MM = 0.00002
-
-
-def oriented_faces(faces):
-    """Ignore facet ordering and cyclic starts, but retain winding and multiplicity."""
-    return Counter(min(tuple(f), tuple(np.roll(f, 1)), tuple(np.roll(f, 2)))
-                   for f in faces)
+MAX_BOUND_ERROR_MM = 0.000001
+MAX_VOLUME_ERROR_MM3 = 0.0001
 
 
 def compare(reference, rebuilt):
-    for mesh in (reference, rebuilt):
-        assert mesh.is_watertight and mesh.is_winding_consistent
-        assert len(mesh.split()) == 1
-    assert len(reference.vertices) == len(rebuilt.vertices), 'Vertex count changed'
-    assert len(reference.faces) == len(rebuilt.faces), 'Facet count changed'
-    distances, mapping = cKDTree(reference.vertices).query(rebuilt.vertices)
-    error = float(distances.max())
-    assert error <= MAX_VERTEX_ERROR_MM, f'Vertex displacement: {error} mm'
-    assert len(set(mapping)) == len(reference.vertices), 'Vertex correspondence is not bijective'
-    assert oriented_faces(reference.faces) == oriented_faces(mapping[rebuilt.faces]), 'Facets or winding changed'
-    return {'vertices': len(reference.vertices), 'facets': len(reference.faces),
-            'max_vertex_error_mm': error}
+    for shape in (reference, rebuilt):
+        assert shape.isValid() and shape.Solids(), 'Invalid CAD'
+    assert len(reference.Solids()) == len(rebuilt.Solids()), 'Solid count changed'
+    a, b = reference.BoundingBox(), rebuilt.BoundingBox()
+    bound_error = max(abs(getattr(a, field) - getattr(b, field))
+                      for field in ('xmin', 'xmax', 'ymin', 'ymax', 'zmin', 'zmax'))
+    assert bound_error <= MAX_BOUND_ERROR_MM, f'Bounds changed: {bound_error} mm'
+    volume_error = abs(reference.Volume() - rebuilt.Volume())
+    assert volume_error <= MAX_VOLUME_ERROR_MM3, f'Volume changed: {volume_error} mm3'
+    missing = reference.cut(rebuilt)
+    added = rebuilt.cut(reference)
+    assert missing.isValid() and added.isValid(), 'Solid difference failed'
+    missing_volume, added_volume = missing.Volume(), added.Volume()
+    assert missing_volume <= MAX_VOLUME_ERROR_MM3, f'Missing material: {missing_volume} mm3'
+    assert added_volume <= MAX_VOLUME_ERROR_MM3, f'Added material: {added_volume} mm3'
+    return {'solids': len(reference.Solids()), 'max_bound_error_mm': bound_error,
+            'volume_error_mm3': volume_error,
+            'missing_mm3': missing_volume, 'added_mm3': added_volume}
 
 
 if __name__ == '__main__':
     results = {}
-    for name in ('shell', 'speaker', 'stand'):
-        path = f'output/current/STL/{name}.stl'
-        original = subprocess.run(['git', 'show', f'HEAD:{path}'], cwd=ROOT,
-                                  check=True, capture_output=True).stdout
-        reference = trimesh.load_mesh(BytesIO(original), file_type='stl')
-        rebuilt = trimesh.load_mesh(ROOT / path)
-        results[name] = compare(reference, rebuilt)
+    with TemporaryDirectory(prefix='cad-rebuild-') as tmp:
+        for name in ('shell', 'speaker', 'stand', 'assembly', 'expansion_adapter'):
+            path = f'output/current/STEP/{name}.step'
+            original = subprocess.run(['git', 'show', f'HEAD:{path}'], cwd=ROOT,
+                                      check=True, capture_output=True).stdout
+            reference_path = Path(tmp) / f'{name}.step'
+            reference_path.write_bytes(original)
+            reference = cq.importers.importStep(str(reference_path)).val()
+            rebuilt = cq.importers.importStep(str(ROOT / path)).val()
+            results[name] = compare(reference, rebuilt)
     print(json.dumps(results, indent=2))
